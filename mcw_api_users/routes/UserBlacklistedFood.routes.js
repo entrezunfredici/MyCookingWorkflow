@@ -1,15 +1,15 @@
 const express = require("express");
-const controller = require("../controllers/BlacklistedFoodUsers.controller");
+const controller = require("../controllers/UserBlacklistedFood.controller");
 const authMiddleware = require("../middlewares/Auth.middleware.js");
 
 const router = express.Router();
 
 /**
  * @swagger
- * /blacklistedFoodUsers/add:
+ * /UserBlacklistedFood/add:
  *   post:
  *     summary: Créer une relation entre un utilisateur et un système Leitner
- *     tags: [BlacklistedFoodUsers]
+ *     tags: [UserBlacklistedFood]
  *     requestBody:
  *       required: true
  *       content:
@@ -45,10 +45,10 @@ router.post("/add", controller.create);
 
 /**
  * @swagger
- * /blacklistedFoodUsers/all:
+ * /UserBlacklistedFood/all:
  *   get:
  *     summary: Récupérer toutes les relations entre utilisateurs et systèmes Leitner
- *     tags: [BlacklistedFoodUsers]
+ *     tags: [UserBlacklistedFood]
  *     responses:
  *       200:
  *         description: Liste de toutes les relations récupérées avec succès.
@@ -59,10 +59,10 @@ router.get("/all", controller.findAll);
 
 /**
  * @swagger
- * /blacklistedFoodUsers/{idUser}/{idDiet}:
+ * /UserBlacklistedFood/{idUser}/{idDiet}:
  *   get:
  *     summary: Récupérer une relation spécifique
- *     tags: [BlacklistedFoodUsers]
+ *     tags: [UserBlacklistedFood]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -88,10 +88,10 @@ router.get("/:idUser/:idDiet", controller.findOne);
 
 /**
  * @swagger
- * /blacklistedFoodUsers/{idUser}/{idDiet}:
+ * /UserBlacklistedFood/{idUser}/{idDiet}:
  *   put:
  *     summary: Mettre à jour les droits d'une relation existante
- *     tags: [BlacklistedFoodUsers]
+ *     tags: [UserBlacklistedFood]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -134,10 +134,10 @@ router.put("/:idUser/:idDiet", controller.update);
 
 /**
  * @swagger
- * /blacklistedFoodUsers/{idUser}/{idDiet}:
+ * /UserBlacklistedFood/{idUser}/{idDiet}:
  *   delete:
  *     summary: Supprimer une relation entre un utilisateur et un système Leitner
- *     tags: [BlacklistedFoodUsers]
+ *     tags: [UserBlacklistedFood]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -163,7 +163,7 @@ module.exports = (app) => {
     /**
    * @swagger
    * tags:
-   *   name: BlacklistedFoodUsers
+   *   name: UserBlacklistedFood
    *   description: Gestion des droits utilisateurs sur les systèmes Leitner
    */
   app.use("/BlacklistedFood", authMiddleware, router);

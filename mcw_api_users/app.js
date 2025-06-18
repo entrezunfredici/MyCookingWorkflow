@@ -13,8 +13,8 @@ const userRoutes = require("./routes/User.routes.js");
 const roleRoutes = require("./routes/Role.routes.js");
 const dietRoutes = require("./routes/Diet.routes.js");
 const blacklistedFoodRoutes = require("./routes/BlacklistedFood.routes.js");
-const dietUsersRoutes = require("./routes/DietUsers.routes.js");
-const blacklistedFoodUsersRoutes = require("./routes/BlacklistedFoodUsers.routes.js");
+const UserDietRoutes = require("./routes/UserDiet.routes.js");
+const UserBlacklistedFoodRoutes = require("./routes/UserBlacklistedFood.routes.js");
 
 dotenv.config({ path: path.resolve(__dirname, ".env") }); // .env is placed in the root directory of the project
 
@@ -43,8 +43,8 @@ userRoutes(app);
 roleRoutes(app);
 dietRoutes(app);
 blacklistedFoodRoutes(app);
-dietUsersRoutes(app);
-blacklistedFoodUsersRoutes(app);
+UserDietRoutes(app);
+UserBlacklistedFoodRoutes(app);
 
 // ... Autres middlewares
 

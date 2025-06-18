@@ -54,5 +54,6 @@ module.exports = (sequelize) => {
             as: "diet",
         });
     };
+
     return UserDiet;
 }

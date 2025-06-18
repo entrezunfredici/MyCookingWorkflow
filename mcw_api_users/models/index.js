@@ -7,14 +7,12 @@ const instance = new Sequelize(process.env.ENVIRONMENT === "prod" ? dbmsConfig :
 
 // Models
 const models = {};
-models.BlacklistedFood = require("./BlacklistedFood.model")(instance);
-models.BlacklistedFoodUsers = require("./BlacklistedFoodUsers.model")(instance);
 models.User = require("./User.model")(instance);
-models.UserBlacklistedFood = require("./UserBlacklistedFood.model")(instance);
 models.Role = require("./Role.model")(instance);
 models.Diet = require("./Diet.model")(instance);
-models.DietUsers = require("./DietUsers.model")(instance);
-
+models.UserDiet = require("./UserDiet.model")(instance);
+models.BlacklistedFood = require("./BlacklistedFood.model")(instance);
+models.UserBlacklistedFood = require("./UserBlacklistedFood.model")(instance);
 
 // // Associations
 Object.keys(models).forEach((modelName) => {
@@ -28,7 +26,7 @@ Object.keys(models).forEach((modelName) => {
 // });
 
 instance.sync({ alter: true }).then(() => {
-  console.log("Base de données synchronisée (force true)");
+  console.log("database synchronized successfully");
   // Ici tu peux démarrer ton serveur ou ta seed
 }).catch((err) => {
   console.error("Erreur lors de la synchronisation de la base :", err);

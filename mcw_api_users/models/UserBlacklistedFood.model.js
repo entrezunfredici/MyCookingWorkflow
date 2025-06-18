@@ -1,9 +1,9 @@
-const { DatatTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const UserBlacklistedFood = sequelize.define('UserBlacklistedFood', {
         userId: {
-            type: DatatTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
                 model: 'User',
@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
             onUpdate: 'CASCADE',
         },
         blacklistedFoodId: {
-            type: DatatTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
                 model: 'BlacklistedFood',
@@ -23,14 +23,14 @@ module.exports = (sequelize) => {
             onUpdate: 'CASCADE',
         },
         updatedAt: {
-            type: DatatTypes.DATE,
+            type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DatatTypes.NOW,
+            defaultValue: DataTypes.NOW,
         },
         createdAt: {
-            type: DatatTypes.DATE,
+            type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DatatTypes.NOW,
+            defaultValue: DataTypes.NOW,
         },
     }, {
         tableName: 'userBlacklistedFood',
@@ -49,4 +49,6 @@ module.exports = (sequelize) => {
             as: 'blacklistedFood',
         });
     };
+
+    return UserBlacklistedFood;
 }

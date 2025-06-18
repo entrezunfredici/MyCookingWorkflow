@@ -70,18 +70,18 @@ module.exports = (instance) => {
   );
 
   // Associations
-  user.associate = (models) => {
+  User.associate = (models) => {
     User.belongsTo(models.Role, {
       foreignKey: "roleId",
       as: "role",
     });
 
-    User.hasMany(models.BlacklistedFoodUsers, {
+    User.hasMany(models.UserBlacklistedFood, {
       foreignKey: "userId",
       as: "blacklistedFoods",
     });
 
-    User.hasMany(models.DietUser, {
+    User.hasMany(models.UserDiet, {
       foreignKey: "userId",
       as: "diets",
     });

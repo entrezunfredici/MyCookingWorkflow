@@ -1,15 +1,15 @@
 const express = require("express");
-const controller = require("../controllers/DietUsers.controller");
+const controller = require("../controllers/UserDiet.controller");
 const authMiddleware = require("../middlewares/Auth.middleware.js");
 
 const router = express.Router();
 
 /**
  * @swagger
- * /dietUsers/add:
+ * /UserDiet/add:
  *   post:
  *     summary: Créer une relation entre un utilisateur et un système Leitner
- *     tags: [DietUsers]
+ *     tags: [UserDiet]
  *     requestBody:
  *       required: true
  *       content:
@@ -45,10 +45,10 @@ router.post("/add", controller.create);
 
 /**
  * @swagger
- * /dietUsers/all:
+ * /UserDiet/all:
  *   get:
  *     summary: Récupérer toutes les relations entre utilisateurs et systèmes Leitner
- *     tags: [DietUsers]
+ *     tags: [UserDiet]
  *     responses:
  *       200:
  *         description: Liste de toutes les relations récupérées avec succès.
@@ -59,10 +59,10 @@ router.get("/all", controller.findAll);
 
 /**
  * @swagger
- * /dietUsers/{idUser}/{idDiet}:
+ * /UserDiet/{idUser}/{idDiet}:
  *   get:
  *     summary: Récupérer une relation spécifique
- *     tags: [DietUsers]
+ *     tags: [UserDiet]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -88,10 +88,10 @@ router.get("/:idUser/:idDiet", controller.findOne);
 
 /**
  * @swagger
- * /dietUsers/{idUser}/{idDiet}:
+ * /UserDiet/{idUser}/{idDiet}:
  *   put:
  *     summary: Mettre à jour les droits d'une relation existante
- *     tags: [DietUsers]
+ *     tags: [UserDiet]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -134,10 +134,10 @@ router.put("/:idUser/:idDiet", controller.update);
 
 /**
  * @swagger
- * /dietUsers/{idUser}/{idDiet}:
+ * /UserDiet/{idUser}/{idDiet}:
  *   delete:
  *     summary: Supprimer une relation entre un utilisateur et un système Leitner
- *     tags: [DietUsers]
+ *     tags: [UserDiet]
  *     parameters:
  *       - name: idUser
  *         in: path
@@ -163,7 +163,7 @@ module.exports = (app) => {
     /**
    * @swagger
    * tags:
-   *   name: dietUsers
+   *   name: UserDiet
    *   description: Gestion des droits utilisateurs sur les systèmes Leitner
    */
   app.use("/BlacklistedFood", authMiddleware, router);
