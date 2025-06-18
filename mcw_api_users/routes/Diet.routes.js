@@ -157,6 +157,5 @@ module.exports = (app) => {
    *   - name: diets
    *     description: Gestion des rôles
    */
-    app.use("/diets", router);
-  // app.use("/diets", authMiddleware, router);
+    app.use("/diets", authMiddleware, router);
 };

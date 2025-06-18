@@ -166,5 +166,5 @@ module.exports = (app) => {
    *   name: dietUsers
    *   description: Gestion des droits utilisateurs sur les systèmes Leitner
    */
-  app.use("/dietusers", router);
+  app.use("/BlacklistedFood", authMiddleware, router);
 };

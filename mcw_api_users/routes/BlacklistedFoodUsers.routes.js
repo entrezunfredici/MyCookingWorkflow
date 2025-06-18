@@ -166,5 +166,5 @@ module.exports = (app) => {
    *   name: BlacklistedFoodUsers
    *   description: Gestion des droits utilisateurs sur les systèmes Leitner
    */
-  app.use("/BlacklistedFoodUsers", router);
+  app.use("/BlacklistedFood", authMiddleware, router);
 };

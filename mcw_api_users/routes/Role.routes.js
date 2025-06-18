@@ -157,6 +157,5 @@ module.exports = (app) => {
    *   - name: Roles
    *     description: Gestion des rôles
    */
-  app.use("/roles", router);
-  // app.use("/roles", authMiddleware, router);
+  app.use("/roles", authMiddleware, router);
 };

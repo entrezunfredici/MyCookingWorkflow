@@ -157,6 +157,5 @@ module.exports = (app) => {
    *   - name: BlacklistedFood
    *     description: Gestion des rôles
    */
-    app.use("/BlacklistedFood", router);
-  // app.use("/BlacklistedFood", authMiddleware, router);
+    app.use("/BlacklistedFood", authMiddleware, router);
 };
