@@ -96,3 +96,7 @@ http://mcw-tools.localhost
 
 pgAdmin (interface de gestion PostgreSQL) :
 http://localhost:8081 (ou le port que vous avez défini pour PGADMIN_PORT)
+
+## Autheur:
+* **Nom** : Macabiau Frederic
+* **Email** : superfred2468@gmail.com or frederic.macabiau@ynov.com
