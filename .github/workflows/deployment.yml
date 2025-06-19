@@ -1,0 +1,29 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - '*init*'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                service: [mcw_api_food, mcw_apitools, mcw_api_users, mcw_front]
+        steps:
+          - name: Checkout Code
+            uses: actions/checkout@v2
+          - name: Install Dependencies and Run Tests
+            working-directory: ${{ matrix.service }}
+            run: |
+                npm install
+                npm run test
+
+    push_on_docker_hub:
+        name: Build and Deploy on docker hub
+        runs-on: ubuntu-latest
+        needs: test
+        if: success() && (startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/dev') || contains(github.ref, 'devops'))
