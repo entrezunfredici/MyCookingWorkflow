@@ -1,19 +1,42 @@
+# docker-compose.yml
+version: '3.8'
 
 services:
   traefik:
     image: traefik:v2.10
     command:
-        - "--api.insecure=true"
-        - "--providers.docker=true"
-        - "--providers.docker.exposedbydefault=false"
-        - "--entrypoints.web.address=:80"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.frontend_entrypoint.address=:${FRONTEND_PORT}"
     ports:
       - "80:80"
       - "8080:8080"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - mcw_network
+
+  # --- Front-end React (avec Nginx pour servir) ---
+  frontend:
+    build:
+      context: ./mcw_front
+      dockerfile: Dockerfile
+    container_name: mcw_frontend
+    depends_on:
+      - api_users
+      - api_food
+      - api_tools
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mcw_frontend.rule=Host(`localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.mcw_frontend.entrypoints=frontend_entrypoint"
+      - "traefik.http.services.mcw_frontend.loadbalancer.server.port=80"
+    networks:
+      - mcw_network
+
 
   postgres_users:
     image: postgres:16
@@ -78,7 +101,8 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_USERS_DB}
-      - PG_PORT=${PG_USERS_PORT}
+      - PG_HOST=postgres_users
+      - PG_PORT=5432
       - API_USERS_PORT=${API_USERS_PORT}
     depends_on:
       - postgres_users
@@ -87,10 +111,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.mcw_users.rule=Host(`mcw-users.localhost`)"
       - "traefik.http.services.mcw_users.loadbalancer.server.port=${API_USERS_PORT}"
-    ports: #porcs
-      - "${API_USERS_PORT}:${API_USERS_PORT}"
-    expose:
-      - "${API_USERS_PORT}"
     networks:
       - mcw_network
 
@@ -102,7 +122,8 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_FOOD_DB}
-      - PG_PORT=${PG_FOOD_PORT}
+      - PG_HOST=postgres_food
+      - PG_PORT=5432
       - API_FOOD_PORT=${API_FOOD_PORT}
     depends_on:
       - postgres_food
@@ -110,10 +131,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.mcw_food.rule=Host(`mcw-food.localhost`)"
       - "traefik.http.services.mcw_food.loadbalancer.server.port=${API_FOOD_PORT}"
-    ports:
-      - "${API_FOOD_PORT}:${API_FOOD_PORT}"
-    expose:
-      - "${API_FOOD_PORT}"
     networks:
       - mcw_network
 
@@ -125,7 +142,8 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_TOOLS_DB}
-      - PG_PORT=${PG_TOOLS_PORT}
+      - PG_HOST=postgres_tools
+      - PG_PORT=5432
       - API_TOOLS_PORT=${API_TOOLS_PORT}
     depends_on:
       - postgres_tools
@@ -133,10 +151,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.mcw_tools.rule=Host(`mcw-tools.localhost`)"
       - "traefik.http.services.mcw_tools.loadbalancer.server.port=${API_TOOLS_PORT}"
-    ports:
-      - "${API_TOOLS_PORT}:${API_TOOLS_PORT}"
-    expose:
-      - "${API_TOOLS_PORT}"
     networks:
       - mcw_network
 
@@ -149,4 +163,3 @@ volumes:
 networks:
   mcw_network:
     driver: bridge
-    #external: true
