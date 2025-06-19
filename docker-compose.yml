@@ -5,7 +5,7 @@ services:
     command:
         - "--api.insecure=true"
         - "--providers.docker=true"
-        - "--providers.docker.exposedbydefault=false"  # 👈 Important !
+        - "--providers.docker.exposedbydefault=false"
         - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
@@ -15,16 +15,42 @@ services:
     networks:
       - mcw_network
 
-  postgres:
+  postgres_users:
     image: postgres:16
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_DB: ${PG_MCW_USERS_DB}   # par défaut, une seule base créée
+      POSTGRES_DB: ${PG_MCW_USERS_DB}
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-users-data:/var/lib/postgresql/data
     ports:
-      - "${PG_PORT}:5432"
+      - "${PG_USERS_PORT}:5432"
+    networks:
+      - mcw_network
+
+  postgres_tools:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_DB: ${PG_MCW_TOOLS_DB}
+    volumes:
+      - postgres-tools-data:/var/lib/postgresql/data
+    ports:
+      - "${PG_TOOLS_PORT}:5432"
+    networks:
+      - mcw_network
+
+  postgres_food:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_DB: ${PG_MCW_FOOD_DB}
+    volumes:
+      - postgres-food-data:/var/lib/postgresql/data
+    ports:
+      - "${PG_FOOD_PORT}:5432"
     networks:
       - mcw_network
 
@@ -38,7 +64,9 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
-      - postgres
+      - postgres_users
+      - postgres_tools
+      - postgres_food
     networks:
       - mcw_network
 
@@ -50,17 +78,19 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_USERS_DB}
-      - PG_PORT=${PG_PORT}
+      - PG_PORT=${PG_USERS_PORT}
+      - API_USERS_PORT=${API_USERS_PORT}
     depends_on:
-      - postgres
-    restart:
-      - unless-stopped
+      - postgres_users
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api_users.rule=Host(`api-users.localhost`)"
-      - "traefik.http.services.api_users.loadbalancer.server.port=${API_USERS_PORT}"
-    ports:
+      - "traefik.http.routers.mcw_users.rule=Host(`mcw-users.localhost`)"
+      - "traefik.http.services.mcw_users.loadbalancer.server.port=${API_USERS_PORT}"
+    ports: #porcs
       - "${API_USERS_PORT}:${API_USERS_PORT}"
+    expose:
+      - "${API_USERS_PORT}"
     networks:
       - mcw_network
 
@@ -72,15 +102,18 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_FOOD_DB}
-      - PG_PORT=${PG_PORT}
+      - PG_PORT=${PG_FOOD_PORT}
+      - API_FOOD_PORT=${API_FOOD_PORT}
     depends_on:
-      - postgres
+      - postgres_food
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api_food.rule=Host(`api-food.localhost`)"
-      - "traefik.http.services.api_food.loadbalancer.server.port=${API_FOOD_PORT}"
+      - "traefik.http.routers.mcw_food.rule=Host(`mcw-food.localhost`)"
+      - "traefik.http.services.mcw_food.loadbalancer.server.port=${API_FOOD_PORT}"
     ports:
       - "${API_FOOD_PORT}:${API_FOOD_PORT}"
+    expose:
+      - "${API_FOOD_PORT}"
     networks:
       - mcw_network
 
@@ -92,25 +125,28 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASS=${PG_PASS}
       - PG_DB=${PG_MCW_TOOLS_DB}
-      - PG_PORT=${PG_PORT}
+      - PG_PORT=${PG_TOOLS_PORT}
+      - API_TOOLS_PORT=${API_TOOLS_PORT}
     depends_on:
-      - postgres
+      - postgres_tools
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api_tools.rule=Host(`api-tools.localhost`)"
-      - "traefik.http.services.api_tools.loadbalancer.server.port=${API_TOOLS_PORT}"
+      - "traefik.http.routers.mcw_tools.rule=Host(`mcw-tools.localhost`)"
+      - "traefik.http.services.mcw_tools.loadbalancer.server.port=${API_TOOLS_PORT}"
     ports:
       - "${API_TOOLS_PORT}:${API_TOOLS_PORT}"
+    expose:
+      - "${API_TOOLS_PORT}"
     networks:
       - mcw_network
 
 volumes:
-  postgres-data:
-    driver: local
+  postgres-users-data:
+  postgres-tools-data:
+  postgres-food-data:
   pgadmin-data:
-    driver: local
 
 networks:
   mcw_network:
     driver: bridge
-    external: true
+    #external: true

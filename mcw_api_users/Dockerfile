@@ -17,7 +17,7 @@ RUN npm i
 COPY . .
 
 # Expose le port sur lequel l'application va tourner
-EXPOSE ${API_PORT}
+EXPOSE ${API_USERS_PORT}
 
 # Commande pour démarrer l'application
 CMD ["npm", "run", "start"]

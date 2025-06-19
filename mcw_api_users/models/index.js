@@ -21,16 +21,18 @@ Object.keys(models).forEach((modelName) => {
   }
 });
 
-// instance.sync({ force: true }).then(() => {
-//   console.log("reset database success"); 
-// });
-
-instance.sync({ alter: true }).then(() => {
-  console.log("database synchronized successfully");
-  // Ici tu peux démarrer ton serveur ou ta seed
+instance.sync({ force: true }).then(() => {
+  console.log("reset database success"); 
 }).catch((err) => {
   console.error("Erreur lors de la synchronisation de la base :", err);
 });
+
+// instance.sync({ alter: true }).then(() => {
+//   console.log("database synchronized successfully");
+//   // Ici tu peux démarrer ton serveur ou ta seed
+// }).catch((err) => {
+//   console.error("Erreur lors de la synchronisation de la base :", err);
+// });
 
 module.exports = {
   instance,
