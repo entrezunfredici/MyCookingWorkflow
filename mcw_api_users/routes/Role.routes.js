@@ -26,7 +26,7 @@ const router = express.Router();
  *                     example: 1
  *                   name:
  *                     type: string
- *                     example: "Math"
+ *                     example: "User"
  *       500:
  *         description: Erreur interne du serveur
  */
@@ -59,7 +59,7 @@ router.get("/all", role.findAll);
  *                   example: 1
  *                 name:
  *                   type: string
- *                   example: "Math"
+ *                   example: "User"
  *       404:
  *         description: Rôle non trouvé
  *       500:
@@ -83,7 +83,7 @@ router.get("/:id", role.findOne);
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Student"
+ *                 example: "User"
  *     responses:
  *       201:
  *         description: Rôle créé avec succès

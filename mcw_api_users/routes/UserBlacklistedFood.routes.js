@@ -8,7 +8,7 @@ const router = express.Router();
  * @swagger
  * /UserBlacklistedFood/add:
  *   post:
- *     summary: Créer une relation entre un utilisateur et un système Leitner
+ *     summary: Créer une relation entre un utilisateur et un ingrédient déprécié
  *     tags: [UserBlacklistedFood]
  *     requestBody:
  *       required: true
@@ -75,7 +75,7 @@ router.get("/all", controller.findAll);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du ingrédient déprécié
  *     responses:
  *       200:
  *         description: Relation récupérée avec succès.
@@ -104,7 +104,7 @@ router.get("/:idUser/:idDiet", controller.findOne);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du ingrédient déprécié
  *     requestBody:
  *       required: true
  *       content:
@@ -136,7 +136,7 @@ router.put("/:idUser/:idDiet", controller.update);
  * @swagger
  * /UserBlacklistedFood/{idUser}/{idDiet}:
  *   delete:
- *     summary: Supprimer une relation entre un utilisateur et un système Leitner
+ *     summary: Supprimer une relation entre un utilisateur et un ingrédient déprécié
  *     tags: [UserBlacklistedFood]
  *     parameters:
  *       - name: idUser
@@ -150,7 +150,7 @@ router.put("/:idUser/:idDiet", controller.update);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du ingrédient déprécié
  *     responses:
  *       200:
  *         description: Relation supprimée avec succès.
@@ -164,7 +164,7 @@ module.exports = (app) => {
    * @swagger
    * tags:
    *   name: UserBlacklistedFood
-   *   description: Gestion des droits utilisateurs sur les systèmes Leitner
+   *   description: Gestion des droits utilisateurs sur les ingrédients dépréciés
    */
   app.use("/BlacklistedFood", authMiddleware, router);
 };
