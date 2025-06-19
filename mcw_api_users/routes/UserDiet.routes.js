@@ -8,7 +8,7 @@ const router = express.Router();
  * @swagger
  * /UserDiet/add:
  *   post:
- *     summary: Créer une relation entre un utilisateur et un système Leitner
+ *     summary: Créer une relation entre un utilisateur et un régime alimentaire
  *     tags: [UserDiet]
  *     requestBody:
  *       required: true
@@ -75,7 +75,7 @@ router.get("/all", controller.findAll);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du régime alimentaire
  *     responses:
  *       200:
  *         description: Relation récupérée avec succès.
@@ -104,7 +104,7 @@ router.get("/:idUser/:idDiet", controller.findOne);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du régime alimentaire
  *     requestBody:
  *       required: true
  *       content:
@@ -136,7 +136,7 @@ router.put("/:idUser/:idDiet", controller.update);
  * @swagger
  * /UserDiet/{idUser}/{idDiet}:
  *   delete:
- *     summary: Supprimer une relation entre un utilisateur et un système Leitner
+ *     summary: Supprimer une relation entre un utilisateur et un régime alimentaire
  *     tags: [UserDiet]
  *     parameters:
  *       - name: idUser
@@ -150,7 +150,7 @@ router.put("/:idUser/:idDiet", controller.update);
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du système Leitner
+ *         description: ID du régime alimentaire
  *     responses:
  *       200:
  *         description: Relation supprimée avec succès.
@@ -164,7 +164,7 @@ module.exports = (app) => {
    * @swagger
    * tags:
    *   name: UserDiet
-   *   description: Gestion des droits utilisateurs sur les systèmes Leitner
+   *   description: Gestion des relations entre utilisateurs et régimes alimentaires
    */
   app.use("/BlacklistedFood", authMiddleware, router);
 };

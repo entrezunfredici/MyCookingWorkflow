@@ -8,12 +8,12 @@ const router = express.Router();
  * @swagger
  * /BlacklistedFood/all:
  *   get:
- *     summary: Récupère tous les rôles
+ *     summary: Récupère tous les ingrédient dépréciés
  *     tags:
  *       - BlacklistedFood
  *     responses:
  *       200:
- *         description: Liste de tous les rôles
+ *         description: Liste de tous les ingrédient dépréciés
  *         content:
  *           application/json:
  *             schema:
@@ -26,7 +26,7 @@ const router = express.Router();
  *                     example: 1
  *                   name:
  *                     type: string
- *                     example: "Math"
+ *                     example: "Oignon"
  *       500:
  *         description: Erreur interne du serveur
  */
@@ -36,19 +36,19 @@ router.get("/all", blacklisted_food.findAll);
  * @swagger
  * /BlacklistedFood/{id}:
  *   get:
- *     summary: Récupère un rôle par son ID
+ *     summary: Récupère un ingrédient déprécié par son ID
  *     tags:
  *       - BlacklistedFood
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du rôle
+ *         description: ID du ingrédient déprécié
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Rôle correspondant à l'ID
+ *         description: ingrédient déprécié correspondant à l'ID
  *         content:
  *           application/json:
  *             schema:
@@ -59,9 +59,9 @@ router.get("/all", blacklisted_food.findAll);
  *                   example: 1
  *                 name:
  *                   type: string
- *                   example: "Math"
+ *                   example: "Oignon"
  *       404:
- *         description: Rôle non trouvé
+ *         description: ingrédient déprécié non trouvé
  *       500:
  *         description: Erreur interne du serveur
  */
@@ -71,7 +71,7 @@ router.get("/:id", blacklisted_food.findOne);
  * @swagger
  * /BlacklistedFood/add:
  *   post:
- *     summary: Ajoute un nouveau rôle
+ *     summary: Ajoute un nouveau ingrédient déprécié
  *     tags:
  *       - BlacklistedFood
  *     requestBody:
@@ -83,10 +83,10 @@ router.get("/:id", blacklisted_food.findOne);
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Student"
+ *                 example: "Oignon"
  *     responses:
  *       201:
- *         description: Rôle créé avec succès
+ *         description: ingrédient déprécié créé avec succès
  *       400:
  *         description: Requête invalide
  *       500:
@@ -98,13 +98,13 @@ router.post("/add", blacklisted_food.create);
  * @swagger
  * /BlacklistedFood/{id}:
  *   put:
- *     summary: Met à jour un rôle existant
+ *     summary: Met à jour un ingrédient déprécié existant
  *     tags: [BlacklistedFood]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du rôle à mettre à jour
+ *         description: ID du ingrédient déprécié à mettre à jour
  *         schema:
  *           type: integer
  *     requestBody:
@@ -119,9 +119,9 @@ router.post("/add", blacklisted_food.create);
  *                 example: "Updated blacklisted_food Name"
  *     responses:
  *       200:
- *         description: Rôle mis à jour avec succès.
+ *         description: ingrédient déprécié mis à jour avec succès.
  *       404:
- *         description: Rôle non trouvé.
+ *         description: ingrédient déprécié non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
@@ -131,20 +131,20 @@ router.put("/:id", blacklisted_food.update);
  * @swagger
  * /BlacklistedFood/{id}:
  *   delete:
- *     summary: Supprime un rôle par son ID
+ *     summary: Supprime un ingrédient déprécié par son ID
  *     tags: [BlacklistedFood]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du rôle à supprimer
+ *         description: ID du ingrédient déprécié à supprimer
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: Rôle supprimé avec succès.
+ *         description: ingrédient déprécié supprimé avec succès.
  *       404:
- *         description: Rôle non trouvé.
+ *         description: ingrédient déprécié non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
@@ -155,7 +155,7 @@ module.exports = (app) => {
    * @swagger
    * tags:
    *   - name: BlacklistedFood
-   *     description: Gestion des rôles
+   *     description: Gestion des ingrédient dépréciés
    */
     app.use("/BlacklistedFood", authMiddleware, router);
 };
