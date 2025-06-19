@@ -53,6 +53,8 @@ services:
       - PG_PORT=${PG_PORT}
     depends_on:
       - postgres
+    restart:
+      - unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api_users.rule=Host(`api-users.localhost`)"
@@ -111,3 +113,4 @@ volumes:
 networks:
   mcw_network:
     driver: bridge
+    external: true
