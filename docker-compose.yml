@@ -3,20 +3,15 @@ services:
   traefik:
     image: traefik:v2.10
     command:
-      - "--api.insecure=true"                   # Dashboard Traefik (optionnel, accessible sur :8080)
-      - "--providers.docker=true"               # Active la détection des containers Docker
-      - "--entrypoints.web.address=:80"         # HTTP port
-      #- "--entrypoints.websecure.address=:443" # HTTPS port (optionnel, si tu veux SSL)
-      #- "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      #- "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      #- "--certificatesresolvers.myresolver.acme.email=ton-email@example.com"
-      #- "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        - "--api.insecure=true"
+        - "--providers.docker=true"
+        - "--providers.docker.exposedbydefault=false"  # 👈 Important !
+        - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
-      - "8080:8080"  # Dashboard Traefik, tu peux retirer si tu veux pas exposer
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      # - traefik-letsencrypt:/letsencrypt # pour certif letsencrypt si besoin
     networks:
       - mcw_network
 
@@ -25,13 +20,11 @@ services:
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_MCW_USER_DB: ${PG_MCW_USERS_DB}
-      POSTGRES_MCW_FOOD_DB: ${PG_MCW_FOOD_DB}
-      POSTGRES_MCW_TOOLS_DB: ${PG_MCW_TOOLS_DB}
+      POSTGRES_DB: ${PG_MCW_USERS_DB}   # par défaut, une seule base créée
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - "${PG_PORT}:${INTERNAL_PG_PORT}"
+      - "${PG_PORT}:5432"
     networks:
       - mcw_network
 
@@ -64,6 +57,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api_users.rule=Host(`api-users.localhost`)"
       - "traefik.http.services.api_users.loadbalancer.server.port=${API_USERS_PORT}"
+    ports:
+      - "${API_USERS_PORT}:${API_USERS_PORT}"
     networks:
       - mcw_network
 
@@ -82,6 +77,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api_food.rule=Host(`api-food.localhost`)"
       - "traefik.http.services.api_food.loadbalancer.server.port=${API_FOOD_PORT}"
+    ports:
+      - "${API_FOOD_PORT}:${API_FOOD_PORT}"
     networks:
       - mcw_network
 
@@ -100,6 +97,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api_tools.rule=Host(`api-tools.localhost`)"
       - "traefik.http.services.api_tools.loadbalancer.server.port=${API_TOOLS_PORT}"
+    ports:
+      - "${API_TOOLS_PORT}:${API_TOOLS_PORT}"
     networks:
       - mcw_network
 
