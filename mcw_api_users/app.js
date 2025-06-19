@@ -47,7 +47,7 @@ UserBlacklistedFoodRoutes(app);
 
 // Si rien n'est trouvé
 app.use(({ res }) => {
-  return res.status(404).json({ message: "Route not found" });
+  return res.status(404).json({ message: "Route not found, type http://mcw-users.localhost/api-docs/" });
 });
 
 module.exports = app;
