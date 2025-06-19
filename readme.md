@@ -19,6 +19,17 @@ Voici une vue d'ensemble de l'architecture des services de l'application :
 
 ![Architecture de My Cooking Workflow](images/image_7c6c7c.png)
 
+## Choix techniques :
+L'application est construite en utilisant une architecture microservice, avec les technologies suivantes :  
+* le langage choisi pour le back et le front est le JS car il est adapté pour les applications web modernes et permet une cohérence entre le frontend et le backend.  
+* **Frontend** : Développé en **Next.js** pour une expérience utilisateur fluide et réactive.
+* **Backend** : Utilise **Node.js** avec **Express** pour gérer les APIs.
+* **Base de données** : PostgreSQL pour stocker les données des utilisateurs, des recettes et des outils.
+* **Gestion des conteneurs** : Docker pour faciliter le déploiement et la gestion des services.
+* **Reverse Proxy** : Traefik pour gérer les requêtes entrantes et diriger le trafic vers les services appropriés. Traefic à l'avantage d'être facile à configurer et à utiliser, et il s'intègre trés bien avec Docker.
+* **Gestion des environnements** : Utilisation de variables d'environnement pour configurer les services, assurant ainsi une flexibilité et une sécurité accrues.
+* **pgAdmin** : Fournit une interface graphique pour gérer les bases de données PostgreSQL, facilitant ainsi la visualisation et la manipulation des données.
+* 
 ---
 
 ## Installation
