@@ -1,31 +1,31 @@
-const { Role } = require("../models/index");
+const { Roles } = require("../models/index");
 
 class RoleService {
 
     async findAll() {
-        const roles = await Role.findAll();
-        return roles;
+        const Roless = await Roles.findAll();
+        return Roless;
     }
 
-    async findOne(roleId) {
-        const role = await Role.findByPk(roleId);
-        return role;
+    async findOne(RolesId) {
+        const Roles = await Roles.findByPk(RolesId);
+        return Roles;
     }
 
     async create(data) {
-        return await Role.create(data);
+        return await Roles.create(data);
     }
 
-    async update(roleId, data) {
-        await Role.update(data, {
-            where: { roleId: roleId }
+    async update(RolesId, data) {
+        await Roles.update(data, {
+            where: { RolesId: RolesId }
         });
-        return this.findOne(roleId);
+        return this.findOne(RolesId);
     }
 
-    async delete(roleId) {
-        return await Role.destroy({
-            where: { roleId: roleId }
+    async delete(RolesId) {
+        return await Roles.destroy({
+            where: { RolesId: RolesId }
         });
     }
 }

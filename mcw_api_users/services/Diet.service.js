@@ -1,31 +1,31 @@
-const { Diet } = require("../models/index");
+const { Diets } = require("../models/index");
 
 class DietService {
 
     async findAll() {
-        const diets = await Diet.findAll();
-        return diets;
+        const Dietss = await Diets.findAll();
+        return Dietss;
     }
 
-    async findOne(dietId) {
-        const diet = await Diet.findByPk(dietId);
-        return diet;
+    async findOne(DietsId) {
+        const Diets = await Diets.findByPk(DietsId);
+        return Diets;
     }
 
     async create(data) {
-        return await Diet.create(data);
+        return await Diets.create(data);
     }
 
-    async update(dietId, data) {
-        await Diet.update(data, {
-            where: { dietId: dietId }
+    async update(DietsId, data) {
+        await Diets.update(data, {
+            where: { DietsId: DietsId }
         });
-        return this.findOne(dietId);
+        return this.findOne(DietsId);
     }
 
-    async delete(dietId) {
-        return await Diet.destroy({
-            where: { dietId: dietId }
+    async delete(DietsId) {
+        return await Diets.destroy({
+            where: { DietsId: DietsId }
         });
     }
 }

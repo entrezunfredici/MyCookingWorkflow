@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-  const User = instance.define(
-    "User",
+  const Users = instance.define(
+    'Users',
     {
       userId: {
         type: DataTypes.INTEGER,
@@ -23,11 +23,11 @@ module.exports = (instance) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: "Role",
-          key: "roleId",
+          model: 'Roles',
+          key: 'roleId',
         },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       password: {
         type: DataTypes.STRING,
@@ -50,43 +50,29 @@ module.exports = (instance) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
     },
     {
-      tableName: "User",
-      updatedAt: "updatedAt",
-      createdAt: "createdAt",
-      timestamps: false,
+      tableName: 'Users',
+      timestamps: true,
     }
   );
 
-  // Associations
-  User.associate = (models) => {
-    User.belongsTo(models.Role, {
-      foreignKey: "roleId",
-      as: "role",
+  Users.associate = (models) => {
+    Users.belongsTo(models.Roles, {
+      foreignKey: 'roleId',
+      as: 'roles',
     });
 
-    User.hasMany(models.UserBlacklistedFood, {
-      foreignKey: "userId",
-      as: "blacklistedFoods",
+    Users.hasMany(models.UserBlacklistedFoods, {
+      foreignKey: 'userId',
+      as: 'blacklistedFoods',
     });
 
-    User.hasMany(models.UserDiet, {
-      foreignKey: "userId",
-      as: "diets",
+    Users.hasMany(models.UserDiets, {
+      foreignKey: 'userId',
+      as: 'diets',
     });
-
   };
 
-  return User;
+  return Users;
 };

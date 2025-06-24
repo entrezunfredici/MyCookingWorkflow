@@ -1,4 +1,3 @@
-# docker-compose.yml
 version: '3.8'
 
 services:
@@ -12,7 +11,7 @@ services:
       - "--entrypoints.frontend_entrypoint.address=:${FRONTEND_PORT}"
     ports:
       - "80:80"
-      - "8080:8080"
+      - "8080:8080" # Pour l'interface UI de Traefik (si vous l'utilisez)
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -25,18 +24,21 @@ services:
       context: ./mcw_front
       dockerfile: Dockerfile
     container_name: mcw_frontend
+    # Nous allons améliorer les depends_on pour attendre que les API soient saines
     depends_on:
-      - api_users
-      - api_food
-      - api_tools
+      api_users:
+        condition: service_healthy
+      api_food:
+        condition: service_healthy
+      api_tools:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mcw_frontend.rule=Host(`localhost`) && PathPrefix(`/`)"
+      - "traefik.http.routers.mcw_frontend.rule=Host(`localhost`)" # Supprimé PathPrefix pour couvrir toutes les routes sous localhost
       - "traefik.http.routers.mcw_frontend.entrypoints=frontend_entrypoint"
       - "traefik.http.services.mcw_frontend.loadbalancer.server.port=80"
     networks:
       - mcw_network
-
 
   postgres_users:
     image: postgres:16
@@ -50,6 +52,12 @@ services:
       - "${PG_USERS_PORT}:5432"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   postgres_tools:
     image: postgres:16
@@ -63,6 +71,12 @@ services:
       - "${PG_TOOLS_PORT}:5432"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   postgres_food:
     image: postgres:16
@@ -76,6 +90,12 @@ services:
       - "${PG_FOOD_PORT}:5432"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   pgadmin:
     image: dpage/pgadmin4
@@ -87,9 +107,12 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
-      - postgres_users
-      - postgres_tools
-      - postgres_food
+      postgres_users:
+        condition: service_healthy
+      postgres_tools:
+        condition: service_healthy
+      postgres_food:
+        condition: service_healthy
     networks:
       - mcw_network
 
@@ -104,8 +127,10 @@ services:
       - PG_HOST=postgres_users
       - PG_PORT=5432
       - API_USERS_PORT=${API_USERS_PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
     depends_on:
-      - postgres_users
+      postgres_users:
+        condition: service_healthy
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
@@ -113,6 +138,12 @@ services:
       - "traefik.http.services.mcw_users.loadbalancer.server.port=${API_USERS_PORT}"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_USERS_PORT}/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   api_food:
     build:
@@ -125,14 +156,22 @@ services:
       - PG_HOST=postgres_food
       - PG_PORT=5432
       - API_FOOD_PORT=${API_FOOD_PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
     depends_on:
-      - postgres_food
+      postgres_food:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mcw_food.rule=Host(`mcw-food.localhost`)"
       - "traefik.http.services.mcw_food.loadbalancer.server.port=${API_FOOD_PORT}"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_FOOD_PORT}/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   api_tools:
     build:
@@ -145,14 +184,22 @@ services:
       - PG_HOST=postgres_tools
       - PG_PORT=5432
       - API_TOOLS_PORT=${API_TOOLS_PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
     depends_on:
-      - postgres_tools
+      postgres_tools:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.mcw_tools.rule=Host(`mcw-tools.localhost`)"
       - "traefik.http.services.mcw_tools.loadbalancer.server.port=${API_TOOLS_PORT}"
     networks:
       - mcw_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_TOOLS_PORT}/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
 volumes:
   postgres-users-data:

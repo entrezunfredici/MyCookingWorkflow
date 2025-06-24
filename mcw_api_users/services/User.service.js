@@ -1,148 +1,150 @@
-const { User, Role } = require("../models/index");
+const { Users, Roles } = require("../models/index");
 const bcrypt = require('bcryptjs');
 const generateCode = require('../helpers/generateCode')
 
 class UserService {
 
     async findAll() {
-        const users = await User.findAll();
-        return users.map(user => {
+        const Users = await Users.findAll();
+        return Users.map(Users => {
             // eslint-disable-next-line no-unused-vars
-            const { password, ...userWithoutPassword } = user?.dataValues || user;
-            return userWithoutPassword;
+            const { password, ...UsersWithoutPassword } = Users?.dataValues || Users;
+            return UsersWithoutPassword;
         });
     }
 
+    //this function doesn't work
     async findByEmail(email) {
-        const user = await User.findOne({
+        console.log("mail")
+        const Users = await Users.findOne({
             where: { email },
         });
-        if (!user) return null;
+        console.log("mail", Users)
+        if (!Users) return null;
+        const { password, ...UsersWithoutPassword } = Users?.dataValues || Users;
+        return UsersWithoutPassword;
+    }
+
+    async findOne(UsersId) {
+        const Users = await Users.findByPk(UsersId);
+        if (!Users) return null;
         // eslint-disable-next-line no-unused-vars
-        const { password, ...userWithoutPassword } = user?.dataValues || user;
-        return userWithoutPassword;
+        const { password, ...UsersWithoutPassword } = Users?.dataValues || Users;
+        return UsersWithoutPassword;
     }
 
-    async findOne(userId) {
-        const user = await User.findByPk(userId);
-        if (!user) return null;
-        // eslint-disable-next-line no-unused-vars
-        const { password, ...userWithoutPassword } = user?.dataValues || user;
-        return userWithoutPassword;
-    }
+    async create(newUser) {
+        //if (await this.findByEmail(newUser.email)) throw new Error('Email déjà utilisé');
+        if (!newUser.name || !newUser.password || !newUser.email) throw new Error('Champs manquants');
 
-    async create(user) {
-        if (await this.findByEmail(user.email)) throw new Error('Email déjà utilisé');
-        if (!user.name || !user.password || !user.email) throw new Error('Champs manquants');
+        newUser.password = await bcrypt.hash(newUser.password, 10);
 
-        user.password = await bcrypt.hash(user.password, 10);
-
-        const newUser = await User.create(user);
-        if (!newUser) throw new Error('Erreur lors de la création de l\'utilisateur');
+        const newUsers = await Users.create(newUser);
+        if (!newUsers) throw new Error('Erreur lors de la création de l\'utilisateur');
 
         // eslint-disable-next-line no-unused-vars
-        const { password, ...userWithoutPassword } = newUser?.dataValues || newUser;
-        return userWithoutPassword;
+        const { password, ...UsersWithoutPassword } = newUsers?.dataValues || newUsers;
+        return UsersWithoutPassword;
     }
 
 
-    async update(userId, user) {
-        await User.update(user, {
-            where: { userId: userId }
+    async update(UsersId, updateUser) {
+        await Users.update(updateUser, {
+            where: { UsersId: UsersId }
         });
-        return this.findOne(userId);
+        return this.findOne(UsersId);
     }
 
-    async delete(userId) {
-        await User.destroy({
-            where: { userId: userId }
-        });
-    }
-
-    async setRole(userId, roleId) {
-        if (!await Role.findByPk(roleId)) throw new Error('Le rôle n\'existe pas');
-
-        await User.update({ roleId: roleId }, {
-            where: { userId: userId }
-        });
-        return this.findOne(userId);
-    }
-
-    async deleteRole(userId) {
-        await User.update({ roleId: null }, {
-            where: { userId: userId }
-        });
-        return this.findOne(userId);
-    }
-
-    async updateLoginDate(userId) {
-        await User.update({ lastLogin: new Date() }, {
-            where: { userId: userId }
+    async delete(UsersId) {
+        await Users.destroy({
+            where: { UsersId: UsersId }
         });
     }
 
-    async verifyPassword(userId, password) {
-        const user = await User.findByPk(userId);
-        return await bcrypt.compare(password, user.password);
+    async setRoles(UsersId, RolesId) {
+        if (!await Roles.findByPk(RolesId)) throw new Error('Le rôle n\'existe pas');
+
+        await Users.update({ RolesId: RolesId }, {
+            where: { UsersId: UsersId }
+        });
+        return this.findOne(UsersId);
     }
 
-    async setPassword(userId, password) {
+    async deleteRoles(UsersId) {
+        await Users.update({ RolesId: null }, {
+            where: { UsersId: UsersId }
+        });
+        return this.findOne(UsersId);
+    }
+
+    async updateLoginDate(UsersId) {
+        await Users.update({ lastLogin: new Date() }, {
+            where: { UsersId: UsersId }
+        });
+    }
+
+    async verifyPassword(UsersId, password) {
+        const Users = await Users.findByPk(UsersId);
+        return await bcrypt.compare(password, Users.password);
+    }
+
+    async setPassword(UsersId, password) {
         if (!password) throw new Error('Mot de passe manquant');
         if (password.length < 10) throw new Error('Le mot de passe doit contenir au moins 10 caractères');
 
         const hashedPassword = await bcrypt.hash(password, 10);
         if (bcrypt.compare(password, hashedPassword)) throw new Error('Le mot de passe doit être différent de l\'ancien');
 
-        await User.update({ password: hashedPassword }, {
-            where: { userId: userId }
+        await Users.update({ password: hashedPassword }, {
+            where: { UsersId: UsersId }
         });
     }
 
-    async setValidEmailCode(userId, code = '') {
+    async setValidEmailCode(UsersId, code = '') {
         if (!code) code = generateCode();
-        await User.update({ validEmailCode: code }, {
-            where: { userId: userId }
+        await Users.update({ validEmailCode: code }, {
+            where: { UsersId: UsersId }
         });
     }
 
-    async verifyValidEmailCode(userId, code) {
-        const user = await User.findByPk(userId);
-        const isValid = user.validEmailCode === code;
-        user.validEmailCode = null;
-        await user.save();
+    async verifyValidEmailCode(UsersId, code) {
+        const Users = await Users.findByPk(UsersId);
+        const isValid = Users.validEmailCode === code;
+        Users.validEmailCode = null;
+        await Users.save();
         return isValid;
     }
 
-    async clearValidEmailCode(userId) {
-        await User.update({ validEmailCode: null }, {
-            where: { userId: userId }
+    async clearValidEmailCode(UsersId) {
+        await Users.update({ validEmailCode: null }, {
+            where: { UsersId: UsersId }
         });
     }
 
-    async setResetPasswordCode(userId, code = '') {
+    async setResetPasswordCode(UsersId, code = '') {
         if (!code) code = generateCode();
-        await User.update({ resetPasswordCode: code }, {
-            where: { userId: userId }
+        await Users.update({ resetPasswordCode: code }, {
+            where: { UsersId: UsersId }
         });
     }
 
-    async verifyResetPasswordCode(userId, code) {
-        const user = await User.findByPk(userId);
-        const isValid = user.resetPasswordCode === code;
-        user.resetPasswordCode = null;
-        await user.save();
+    async verifyResetPasswordCode(UsersId, code) {
+        const Users = await Users.findByPk(UsersId);
+        const isValid = Users.resetPasswordCode === code;
+        Users.resetPasswordCode = null;
+        await Users.save();
         return isValid;
     }
 
-    async clearResetPasswordCode(userId) {
-        await User.update({ resetPasswordCode: null }, {
-            where: { userId: userId }
+    async clearResetPasswordCode(UsersId) {
+        await Users.update({ resetPasswordCode: null }, {
+            where: { UsersId: UsersId }
         });
     }
 
-    async clearAllCodes(userId) {
-        await this.clearValidEmailCode(userId);
-        await this.clearResetPasswordCode(userId);
+    async clearAllCodes(UsersId) {
+        await this.clearValidEmailCode(UsersId);
+        await this.clearResetPasswordCode(UsersId);
     }
 }
 

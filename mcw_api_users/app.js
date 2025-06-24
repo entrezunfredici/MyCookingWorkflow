@@ -45,6 +45,8 @@ blacklistedFoodRoutes(app);
 UserDietRoutes(app);
 UserBlacklistedFoodRoutes(app);
 
+app.use('/health', require('express-healthcheck')());
+
 // Si rien n'est trouvé
 app.use(({ res }) => {
   return res.status(404).json({ message: "Route not found, type http://mcw-users.localhost/api-docs/" });
