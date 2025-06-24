@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
     res.status(201).send({ message: "Utilisateur inscrit avec succès." });
   } catch (error) {
     console.error(error?.message || error);
-    res.status(500).send({ message: "Erreur lors de l'inscription." });
+    res.status(500).send({ message: "inscription failed "+error?.message || error });
   }
 };
 

@@ -33,6 +33,7 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 // Middleware pour servir la documentation Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use('/health', require('express-healthcheck')());
 // Routes
 
 // ... Autres middlewares

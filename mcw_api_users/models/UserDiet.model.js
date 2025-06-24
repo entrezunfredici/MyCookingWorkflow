@@ -1,59 +1,47 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const UserDiet = sequelize.define(
-        "UserDiet",
+    const UserDiets = sequelize.define(
+        'UserDiets',
         {
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "User",
-                    key: "userId",
+                    model: 'Users',
+                    key: 'userId',
                 },
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
             },
             dietId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "Diet",
-                    key: "dietId",
+                    model: 'Diets',
+                    key: 'dietId',
                 },
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE",
-            },
-            updatedAt: {
-                type: DataTypes.DATE,
-                allowNull: false,
-                defaultValue: DataTypes.NOW,
-            },
-            createdAt: {
-                type: DataTypes.DATE,
-                allowNull: false,
-                defaultValue: DataTypes.NOW,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
             },
         },
         {
-            tableName: "userDiet",
-            updatedAt: "updatedAt",
-            createdAt: "createdAt",
+            tableName: 'userDiets',
             timestamps: true,
         }
     );
 
-// Associations
-    UserDiet.associate = (models) => {
-        UserDiet.belongsTo(models.User, {
-            foreignKey: "userId",
-            as: "user",
+    // Associations
+    UserDiets.associate = (models) => {
+        UserDiets.belongsTo(models.Users, {
+            foreignKey: 'userId',
+            as: 'users',
         });
-        UserDiet.belongsTo(models.Diet, {
-            foreignKey: "dietId",
-            as: "diet",
+        UserDiets.belongsTo(models.Diets, {
+            foreignKey: 'dietId',
+            as: 'diets',
         });
     };
 
-    return UserDiet;
+    return UserDiets;
 }

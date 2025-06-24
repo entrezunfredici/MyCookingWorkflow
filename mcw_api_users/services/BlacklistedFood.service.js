@@ -1,31 +1,31 @@
-const { BlacklistedFood } = require("../models/index");
+const { BlacklistedFoods } = require("../models/index");
 
 class BlacklistedFoodService {
 
     async findAll() {
-        const BlacklistedFood = await BlacklistedFood.findAll();
-        return BlacklistedFood;
+        const BlacklistedFoods = await BlacklistedFoods.findAll();
+        return BlacklistedFoods;
     }
 
-    async findOne(BlacklistedFoodId) {
-        const BlacklistedFood = await BlacklistedFood.findByPk(BlacklistedFoodId);
-        return BlacklistedFood;
+    async findOne(BlacklistedFoodsId) {
+        const BlacklistedFoods = await BlacklistedFoods.findByPk(BlacklistedFoodsId);
+        return BlacklistedFoods;
     }
 
     async create(data) {
-        return await BlacklistedFood.create(data);
+        return await BlacklistedFoods.create(data);
     }
 
-    async update(BlacklistedFoodId, data) {
-        await BlacklistedFood.update(data, {
-            where: { BlacklistedFoodId: BlacklistedFoodId }
+    async update(BlacklistedFoodsId, data) {
+        await BlacklistedFoods.update(data, {
+            where: { BlacklistedFoodsId: BlacklistedFoodsId }
         });
-        return this.findOne(BlacklistedFoodId);
+        return this.findOne(BlacklistedFoodsId);
     }
 
-    async delete(BlacklistedFoodId) {
-        return await BlacklistedFood.destroy({
-            where: { BlacklistedFoodId: BlacklistedFoodId }
+    async delete(BlacklistedFoodsId) {
+        return await BlacklistedFoods.destroy({
+            where: { BlacklistedFoodsId: BlacklistedFoodsId }
         });
     }
 }

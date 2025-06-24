@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('BlacklistedFood', {
+    return instance.define('BlacklistedFoods', {
         blacklistedFoodId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -12,20 +12,8 @@ module.exports = (instance) => {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     }, {
-        tableName: 'blacklistedFood',
-        updatedAt: 'updatedAt',
-        createdAt: 'createdAt',
+        tableName: 'BlacklistedFoods',
         timestamps: true,
     })
 }

@@ -1,10 +1,10 @@
-const UserBlacklistedFoodervice = require("../services/UserBlacklistedFood.service");
+const UserBlacklistedFoodService = require("../services/UserBlacklistedFood.service");
 
 module.exports = {
   async create(req, res) {
     try {
       const data = req.body;
-      const result = await UserBlacklistedFoodervice.create(data);
+      const result = await UserBlacklistedFoodService.create(data);
       return res.status(201).json(result);
     } catch (error) {
       console.error(error?.message || error);
@@ -14,7 +14,7 @@ module.exports = {
 
   async findAll(req, res) {
     try {
-      const result = await UserBlacklistedFoodervice.findAll();
+      const result = await UserBlacklistedFoodService.findAll();
       return res.status(200).json(result);
     } catch (error) {
       console.error(error?.message || error);
@@ -25,7 +25,7 @@ module.exports = {
   async findOne(req, res) {
     try {
       const { idUser, idSystem } = req.params;
-      const result = await UserBlacklistedFoodervice.findOne(idUser, idSystem);
+      const result = await UserBlacklistedFoodService.findOne(idUser, idSystem);
       if (!result) {
         return res.status(404).json({ message: "Relation non trouvée" });
       }
@@ -47,7 +47,7 @@ module.exports = {
         });
       }
 
-      const result = await UserBlacklistedFoodervice.update(
+      const result = await UserBlacklistedFoodService.update(
         idUser,
         idSystem,
         data
@@ -75,7 +75,7 @@ module.exports = {
   async delete(req, res) {
     try {
       const { idUser, idSystem } = req.params;
-      await UserBlacklistedFoodervice.delete(idUser, idSystem);
+      await UserBlacklistedFoodService.delete(idUser, idSystem);
       return res
         .status(200)
         .json({ message: "Relation supprimée avec succès" });
