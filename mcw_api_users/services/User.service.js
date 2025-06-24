@@ -5,20 +5,22 @@ const generateCode = require('../helpers/generateCode')
 class UserService {
 
     async findAll() {
-        const Userss = await Users.findAll();
-        return Userss.map(Users => {
+        const Users = await Users.findAll();
+        return Users.map(Users => {
             // eslint-disable-next-line no-unused-vars
             const { password, ...UsersWithoutPassword } = Users?.dataValues || Users;
             return UsersWithoutPassword;
         });
     }
 
+    //this function doesn't work
     async findByEmail(email) {
+        console.log("mail")
         const Users = await Users.findOne({
             where: { email },
         });
+        console.log("mail", Users)
         if (!Users) return null;
-        // eslint-disable-next-line no-unused-vars
         const { password, ...UsersWithoutPassword } = Users?.dataValues || Users;
         return UsersWithoutPassword;
     }
@@ -31,13 +33,13 @@ class UserService {
         return UsersWithoutPassword;
     }
 
-    async create(Users) {
-        if (await this.findByEmail(Users.email)) throw new Error('Email déjà utilisé');
-        if (!Users.name || !Users.password || !Users.email) throw new Error('Champs manquants');
+    async create(newUser) {
+        //if (await this.findByEmail(newUser.email)) throw new Error('Email déjà utilisé');
+        if (!newUser.name || !newUser.password || !newUser.email) throw new Error('Champs manquants');
 
-        Users.password = await bcrypt.hash(Users.password, 10);
+        newUser.password = await bcrypt.hash(newUser.password, 10);
 
-        const newUsers = await Users.create(Users);
+        const newUsers = await Users.create(newUser);
         if (!newUsers) throw new Error('Erreur lors de la création de l\'utilisateur');
 
         // eslint-disable-next-line no-unused-vars
@@ -46,8 +48,8 @@ class UserService {
     }
 
 
-    async update(UsersId, Users) {
-        await Users.update(Users, {
+    async update(UsersId, updateUser) {
+        await Users.update(updateUser, {
             where: { UsersId: UsersId }
         });
         return this.findOne(UsersId);
