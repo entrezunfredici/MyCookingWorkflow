@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-  const User = instance.define(
-    'User',
+  const Users = instance.define(
+    'Users',
     {
       userId: {
         type: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ module.exports = (instance) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: 'Role',
+          model: 'Roles',
           key: 'roleId',
         },
         onDelete: 'CASCADE',
@@ -52,27 +52,27 @@ module.exports = (instance) => {
       },
     },
     {
-      tableName: 'User',
+      tableName: 'Users',
       timestamps: true,
     }
   );
 
-  User.associate = (models) => {
-    User.belongsTo(models.Role, {
+  Users.associate = (models) => {
+    Users.belongsTo(models.Roles, {
       foreignKey: 'roleId',
-      as: 'role',
+      as: 'roles',
     });
 
-    User.hasMany(models.UserBlacklistedFood, {
+    Users.hasMany(models.UserBlacklistedFoods, {
       foreignKey: 'userId',
       as: 'blacklistedFoods',
     });
 
-    User.hasMany(models.UserDiet, {
+    Users.hasMany(models.UserDiets, {
       foreignKey: 'userId',
       as: 'diets',
     });
   };
 
-  return User;
+  return Users;
 };

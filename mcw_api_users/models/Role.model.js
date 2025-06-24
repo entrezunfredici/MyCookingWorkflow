@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('Role', {
+    return instance.define('Roles', {
         roleId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -13,7 +13,7 @@ module.exports = (instance) => {
             allowNull: false,
         },
     }, {
-        tableName: 'Role',
+        tableName: 'Roles',
         timestamps: true,
     })
 }

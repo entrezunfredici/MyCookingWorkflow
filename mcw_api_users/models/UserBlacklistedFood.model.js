@@ -1,12 +1,13 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const UserBlacklistedFood = sequelize.define('UserBlacklistedFood', {
+    const UserBlacklistedFoods = sequelize.define('UserBlacklistedFoods', {
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
             references: {
-                model: 'User',
+                model: 'Users',
                 key: 'userId',
             },
             onDelete: 'CASCADE',
@@ -15,28 +16,29 @@ module.exports = (sequelize) => {
         blacklistedFoodId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
             references: {
-                model: 'BlacklistedFood',
+                model: 'BlacklistedFoods',
                 key: 'blacklistedFoodId',
             },
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         },
     }, {
-        tableName: 'UserBlacklistedFood',
+        tableName: 'UserBlacklistedFoods',
         timestamps: true,
     });
     // Associations
-    UserBlacklistedFood.associate = (models) => {
-        UserBlacklistedFood.belongsTo(models.User, {
+    UserBlacklistedFoods.associate = (models) => {
+        UserBlacklistedFoods.belongsTo(models.Users, {
             foreignKey: 'userId',
-            as: 'user',
+            as: 'users',
         });
-        UserBlacklistedFood.belongsTo(models.BlacklistedFood, {
+        UserBlacklistedFoods.belongsTo(models.BlacklistedFoods, {
             foreignKey: 'blacklistedFoodId',
-            as: 'blacklistedFood',
+            as: 'blacklistedFoods',
         });
     };
 
-    return UserBlacklistedFood;
+    return UserBlacklistedFoods;
 }

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('BlacklistedFood', {
+    return instance.define('BlacklistedFoods', {
         blacklistedFoodId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -13,7 +13,7 @@ module.exports = (instance) => {
             allowNull: false,
         },
     }, {
-        tableName: 'BlacklistedFood',
+        tableName: 'BlacklistedFoods',
         timestamps: true,
     })
 }

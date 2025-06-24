@@ -1,14 +1,14 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    const UserDiet = sequelize.define(
-        'UserDiet',
+    const UserDiets = sequelize.define(
+        'UserDiets',
         {
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'User',
+                    model: 'Users',
                     key: 'userId',
                 },
             onDelete: 'CASCADE',
@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'Diet',
+                    model: 'Diets',
                     key: 'dietId',
                 },
             onDelete: 'CASCADE',
@@ -26,22 +26,22 @@ module.exports = (sequelize) => {
             },
         },
         {
-            tableName: 'userDiet',
+            tableName: 'userDiets',
             timestamps: true,
         }
     );
 
-// Associations
-    UserDiet.associate = (models) => {
-        UserDiet.belongsTo(models.User, {
+    // Associations
+    UserDiets.associate = (models) => {
+        UserDiets.belongsTo(models.Users, {
             foreignKey: 'userId',
-            as: 'user',
+            as: 'users',
         });
-        UserDiet.belongsTo(models.Diet, {
+        UserDiets.belongsTo(models.Diets, {
             foreignKey: 'dietId',
-            as: 'diet',
+            as: 'diets',
         });
     };
 
-    return UserDiet;
+    return UserDiets;
 }
