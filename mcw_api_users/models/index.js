@@ -7,14 +7,14 @@ const instance = new Sequelize(process.env.ENVIRONMENT === "prod" ? dbmsConfig :
 
 // Models
 const models = {};
-models.User = require("./User.model")(instance);
 models.Role = require("./Role.model")(instance);
 models.Diet = require("./Diet.model")(instance);
-models.UserDiet = require("./UserDiet.model")(instance);
 models.BlacklistedFood = require("./BlacklistedFood.model")(instance);
+models.User = require("./User.model")(instance);
+models.UserDiet = require("./UserDiet.model")(instance);
 models.UserBlacklistedFood = require("./UserBlacklistedFood.model")(instance);
 
-// // Associations
+//Associations
 Object.keys(models).forEach((modelName) => {
   if (models[modelName].associate) {
     models[modelName].associate(models);

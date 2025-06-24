@@ -1,44 +1,32 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const UserDiet = sequelize.define(
-        "UserDiet",
+        'UserDiet',
         {
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "User",
-                    key: "userId",
+                    model: 'User',
+                    key: 'userId',
                 },
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE",
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
             },
             dietId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
-                    model: "Diet",
-                    key: "dietId",
+                    model: 'Diet',
+                    key: 'dietId',
                 },
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE",
-            },
-            updatedAt: {
-                type: DataTypes.DATE,
-                allowNull: false,
-                defaultValue: DataTypes.NOW,
-            },
-            createdAt: {
-                type: DataTypes.DATE,
-                allowNull: false,
-                defaultValue: DataTypes.NOW,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
             },
         },
         {
-            tableName: "userDiet",
-            updatedAt: "updatedAt",
-            createdAt: "createdAt",
+            tableName: 'userDiet',
             timestamps: true,
         }
     );
@@ -46,12 +34,12 @@ module.exports = (sequelize) => {
 // Associations
     UserDiet.associate = (models) => {
         UserDiet.belongsTo(models.User, {
-            foreignKey: "userId",
-            as: "user",
+            foreignKey: 'userId',
+            as: 'user',
         });
         UserDiet.belongsTo(models.Diet, {
-            foreignKey: "dietId",
-            as: "diet",
+            foreignKey: 'dietId',
+            as: 'diet',
         });
     };
 

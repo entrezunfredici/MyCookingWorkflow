@@ -12,20 +12,8 @@ module.exports = (instance) => {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     }, {
-        tableName: 'roles',
-        updatedAt: 'updatedAt',
-        createdAt: 'createdAt',
+        tableName: 'Role',
         timestamps: true,
     })
 }

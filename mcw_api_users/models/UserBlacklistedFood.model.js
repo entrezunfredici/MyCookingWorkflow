@@ -22,20 +22,8 @@ module.exports = (sequelize) => {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
     }, {
-        tableName: 'userBlacklistedFood',
-        updatedAt: 'updatedAt',
-        createdAt: 'createdAt',
+        tableName: 'UserBlacklistedFood',
         timestamps: true,
     });
     // Associations

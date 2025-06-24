@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
   const User = instance.define(
-    "User",
+    'User',
     {
       userId: {
         type: DataTypes.INTEGER,
@@ -23,11 +23,11 @@ module.exports = (instance) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: "Role",
-          key: "roleId",
+          model: 'Role',
+          key: 'roleId',
         },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       password: {
         type: DataTypes.STRING,
@@ -50,42 +50,28 @@ module.exports = (instance) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
     },
     {
-      tableName: "User",
-      updatedAt: "updatedAt",
-      createdAt: "createdAt",
-      timestamps: false,
+      tableName: 'User',
+      timestamps: true,
     }
   );
 
-  // Associations
   User.associate = (models) => {
     User.belongsTo(models.Role, {
-      foreignKey: "roleId",
-      as: "role",
+      foreignKey: 'roleId',
+      as: 'role',
     });
 
     User.hasMany(models.UserBlacklistedFood, {
-      foreignKey: "userId",
-      as: "blacklistedFoods",
+      foreignKey: 'userId',
+      as: 'blacklistedFoods',
     });
 
     User.hasMany(models.UserDiet, {
-      foreignKey: "userId",
-      as: "diets",
+      foreignKey: 'userId',
+      as: 'diets',
     });
-
   };
 
   return User;
