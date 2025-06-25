@@ -6,7 +6,7 @@ exports.findAll = async (req, res) => {
         res.status(200).send(data);
     } catch (error) {
         res.status(500).send({
-            message: error.message || "Une erreur s'est produite lors de la récupération des rôles.",
+            message: error.message || "Une erreur s'est produite lors de la récupération des étapes.",
         });
     }
 };

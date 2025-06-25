@@ -1,18 +1,18 @@
 const express = require("express");
-const step = require("../controllers/Step.controller.js");
+const todoList = require("../controllers/TodoList.controller.js");
 const authMiddleware = require("../middlewares/Auth.middleware.js");
 
 const router = express.Router();
 
 /**
  * @swagger
- * /steps/all:
+ * /todolist/all:
  *   get:
- *     summary: Récupère toutes les étapes
- *     tags: [Steps]
+ *     summary: Récupère toutes les liste de tâches
+ *     tags: [TodoList]
  *     responses:
  *       200:
- *         description: Liste de toutes les étapes
+ *         description: Liste de toutes les liste de tâches
  *         content:
  *           application/json:
  *             schema:
@@ -26,33 +26,27 @@ const router = express.Router();
  *                   name:
  *                     type: string
  *                     example: "etape 1"
- *                   description:
- *                     type: string
- *                     example: "Porter à ébullition une casserole d'eau salée"
- *                   position:
- *                     type: integer
- *                     example: 1
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/all", authMiddleware, step.findAll);
+router.get("/all", authMiddleware, todoList.findAll);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todolist/{id}:
  *   get:
- *     summary: Récupère une étape par son ID
- *     tags: [Steps]
+ *     summary: Récupère une liste de tâche par son ID
+ *     tags: [TodoList]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID des étapes
+ *         description: ID des liste de tâches
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: étape correspondant à l'ID
+ *         description: liste de tâche correspondant à l'ID
  *         content:
  *           application/json:
  *             schema:
@@ -64,25 +58,19 @@ router.get("/all", authMiddleware, step.findAll);
  *                 name:
  *                   type: string
  *                   example: "etape 1"
- *                 description:
- *                   type: string
- *                   example: "Porter à ébullition une casserole d'eau salée"
- *                 position:
- *                   type: integer
- *                   example: 1
  *       404:
- *         description: étape non trouvé
+ *         description: liste de tâche non trouvé
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/:id", authMiddleware, step.findOne);
+router.get("/:id", authMiddleware, todoList.findOne);
 
 /**
  * @swagger
- * /steps/add:
+ * /todolist/add:
  *   post:
- *     summary: Ajoute un nouveau étape
- *     tags: [Steps]
+ *     summary: Ajoute un nouveau liste de tâche
+ *     tags: [TodoList]
  *     requestBody:
  *       required: true
  *       content:
@@ -92,34 +80,28 @@ router.get("/:id", authMiddleware, step.findOne);
  *             properties:
  *               name:
  *                 type: string
- *                 example: "etape 1"
- *               description:
- *                 type: string
- *                 example: "Porter à ébullition une casserole d'eau salée"
- *               position:
- *                 type: integer
- *                 example: 1
+ *                 example: "repas de la journée"
  *     responses:
  *       201:
- *         description: étape créé avec succès
+ *         description: liste de tâche créé avec succès
  *       400:
  *         description: Requête invalide
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post("/add", authMiddleware, step.create);
+router.post("/add", authMiddleware, todoList.create);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todolist/{id}:
  *   put:
- *     summary: Met à jour un étape existant
- *     tags: [Steps]
+ *     summary: Met à jour un liste de tâche existant
+ *     tags: [TodoList]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du étape à mettre à jour
+ *         description: ID du liste de tâche à mettre à jour
  *         schema:
  *           type: integer
  *     requestBody:
@@ -131,52 +113,46 @@ router.post("/add", authMiddleware, step.create);
  *             properties:
  *              name:
  *                type: string
- *                example: "etape 2"
- *              description:
- *                type: string
- *                example: "faire cuire les spaguetti 12 minutes dans la casserole d'eau bouillante, puis les egoutter et les reserver"
- *              position:
- *               type: integer
- *               example: 2
+ *                example: "plats à preparer"
  *     responses:
  *       200:
- *         description: étape mis à jour avec succès.
+ *         description: liste de tâche mis à jour avec succès.
  *       404:
- *         description: étape non trouvé.
+ *         description: liste de tâche non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.put("/:id", authMiddleware, step.update);
+router.put("/:id", authMiddleware, todoList.update);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todolist/{id}:
  *   delete:
- *     summary: Supprime un étape par son ID
- *     tags: [Steps]
+ *     summary: Supprime un liste de tâche par son ID
+ *     tags: [TodoList]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du étape à supprimer
+ *         description: ID du liste de tâche à supprimer
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: étape supprimé avec succès.
+ *         description: liste de tâche supprimé avec succès.
  *       404:
- *         description: étape non trouvé.
+ *         description: liste de tâche non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.delete("/:id", authMiddleware, step.delete);
+router.delete("/:id", authMiddleware, todoList.delete);
 
 module.exports = (app) => {
-  /**
+    /**
    * @swagger
    * tags:
-   *   - name: Steps
-   *     description: Gestion des étapes
+   *   - name: TodoList
+   *     description: Gestion des liste de tâches
    */
-  app.use("/steps", router);
+    app.use("/todolist", router);
 };
