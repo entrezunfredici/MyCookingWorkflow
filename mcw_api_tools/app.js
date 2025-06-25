@@ -11,6 +11,7 @@ const swaggerSpec = swaggerJsdoc(require("./config/swagger.config.js"));
 // Importation des routes
 const stepRoutes = require("./routes/Step.routes.js");
 const todoListRoutes = require("./routes/TodoList.routes.js");
+const todoRoutes = require("./routes/Todo.routes.js");
 
 dotenv.config({ path: path.resolve(__dirname, ".env") }); // .env is placed in the root directory of the project
 
@@ -37,6 +38,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Routes
 stepRoutes(app);
 todoListRoutes(app);
+todoRoutes(app);
 
 // ... Autres middlewares
 app.use('/health', require('express-healthcheck')());

@@ -1,18 +1,18 @@
 const express = require("express");
-const step = require("../controllers/Step.controller.js");
+const todo = require("../controllers/Todo.controller.js");
 const authMiddleware = require("../middlewares/Auth.middleware.js");
 
 const router = express.Router();
 
 /**
  * @swagger
- * /steps/all:
+ * /todos/all:
  *   get:
- *     summary: Récupère toutes les étapes
- *     tags: [Steps]
+ *     summary: Récupère toutes les tâches
+ *     tags: [todos]
  *     responses:
  *       200:
- *         description: Liste de toutes les étapes
+ *         description: Liste de toutes les tâches
  *         content:
  *           application/json:
  *             schema:
@@ -29,30 +29,33 @@ const router = express.Router();
  *                   description:
  *                     type: string
  *                     example: "Porter à ébullition une casserole d'eau salée"
- *                   position:
+ *                   datetime:
+ *                     type: datetime
+ *                     example: "2023-10-01T12:00:00Z"
+ *                   todoListId:
  *                     type: integer
  *                     example: 1
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/all", authMiddleware, step.findAll);
+router.get("/all", authMiddleware, todo.findAll);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todos/{id}:
  *   get:
- *     summary: Récupère une étape par son ID
- *     tags: [Steps]
+ *     summary: Récupère une tâche par son ID
+ *     tags: [todos]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID des étapes
+ *         description: ID des tâches
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: étape correspondant à l'ID
+ *         description: tâche correspondant à l'ID
  *         content:
  *           application/json:
  *             schema:
@@ -67,22 +70,25 @@ router.get("/all", authMiddleware, step.findAll);
  *                 description:
  *                   type: string
  *                   example: "Porter à ébullition une casserole d'eau salée"
- *                 position:
+ *                 datetime:
+ *                   type: datetime
+ *                   example: "2023-10-01T12:00:00Z"
+ *                 todoListId:
  *                   type: integer
  *                   example: 1
  *       404:
- *         description: étape non trouvé
+ *         description: tâche non trouvé
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/:id", authMiddleware, step.findOne);
+router.get("/:id", authMiddleware, todo.findOne);
 
 /**
  * @swagger
- * /steps/add:
+ * /todos/add:
  *   post:
- *     summary: Ajoute un nouveau étape
- *     tags: [Steps]
+ *     summary: Ajoute une nouvelle tâche
+ *     tags: [todos]
  *     requestBody:
  *       required: true
  *       content:
@@ -96,30 +102,33 @@ router.get("/:id", authMiddleware, step.findOne);
  *               description:
  *                 type: string
  *                 example: "Porter à ébullition une casserole d'eau salée"
- *               position:
+ *               datetime:
+ *                 type: datetime
+ *                 example: "2023-10-01T12:00:00Z"
+ *               todoListId:
  *                 type: integer
  *                 example: 1
  *     responses:
  *       201:
- *         description: étape créé avec succès
+ *         description: tâche créé avec succès
  *       400:
  *         description: Requête invalide
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post("/add", authMiddleware, step.create);
+router.post("/add", authMiddleware, todo.create);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todos/{id}:
  *   put:
- *     summary: Met à jour un étape existant
- *     tags: [Steps]
+ *     summary: Met à jour une tâche existante
+ *     tags: [todos]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du étape à mettre à jour
+ *         description: ID de la tâche à mettre à jour
  *         schema:
  *           type: integer
  *     requestBody:
@@ -135,48 +144,51 @@ router.post("/add", authMiddleware, step.create);
  *              description:
  *                type: string
  *                example: "faire cuire les spaguetti 12 minutes dans la casserole d'eau bouillante, puis les egoutter et les reserver"
- *              position:
- *               type: integer
- *               example: 2
+ *              datetime:
+ *                type: datetime
+ *                example: "2023-10-01T12:00:00Z"
+ *              todoListId:
+ *                 type: integer
+ *                 example: 1
  *     responses:
  *       200:
- *         description: étape mis à jour avec succès.
+ *         description: tâche mis à jour avec succès.
  *       404:
- *         description: étape non trouvé.
+ *         description: tâche non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.put("/:id", authMiddleware, step.update);
+router.put("/:id", authMiddleware, todo.update);
 
 /**
  * @swagger
- * /steps/{id}:
+ * /todos/{id}:
  *   delete:
- *     summary: Supprime un étape par son ID
- *     tags: [Steps]
+ *     summary: Supprime une tâche par son ID
+ *     tags: [todos]
  *     parameters:
  *       - name: id
  *         in: path
  *         required: true
- *         description: ID du étape à supprimer
+ *         description: ID du tâche à supprimer
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *         description: étape supprimé avec succès.
+ *         description: tâche supprimé avec succès.
  *       404:
- *         description: étape non trouvé.
+ *         description: tâche non trouvé.
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.delete("/:id", authMiddleware, step.delete);
+router.delete("/:id", authMiddleware, todo.delete);
 
 module.exports = (app) => {
-  /**
+    /**
    * @swagger
    * tags:
-   *   - name: Steps
-   *     description: Gestion des étapes
+   *   - name: todos
+   *     description: Gestion des tâches
    */
-  app.use("/steps", authMiddleware, router);
+    app.use("/todos", router);
 };

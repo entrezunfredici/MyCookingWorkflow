@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
     return instance.define('TodoLists', {
-        id: {
+        todoListId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,

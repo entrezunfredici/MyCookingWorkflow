@@ -1,6 +1,6 @@
 const { TodoLists } = require("../models/index");
 
-class ToDoListService {
+class TodoListService {
     async findAll() {
         const result = await TodoLists.findAll();
         return result;
@@ -29,4 +29,4 @@ class ToDoListService {
     }
 }
 
-module.exports = new ToDoListService();
+module.exports = new TodoListService();
