@@ -32,11 +32,11 @@ module.exports = (sequelize) => {
     UserBlacklistedFoods.associate = (models) => {
         UserBlacklistedFoods.belongsTo(models.Users, {
             foreignKey: 'userId',
-            as: 'users',
+            as: 'Users',
         });
         UserBlacklistedFoods.belongsTo(models.BlacklistedFoods, {
             foreignKey: 'blacklistedFoodId',
-            as: 'blacklistedFoods',
+            as: 'BlacklistedFoods',
         });
     };
 

@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
             },
         },
         {
-            tableName: 'userDiets',
+            tableName: 'UserDiets',
             timestamps: true,
         }
     );
@@ -35,11 +35,11 @@ module.exports = (sequelize) => {
     UserDiets.associate = (models) => {
         UserDiets.belongsTo(models.Users, {
             foreignKey: 'userId',
-            as: 'users',
+            as: 'Users',
         });
         UserDiets.belongsTo(models.Diets, {
             foreignKey: 'dietId',
-            as: 'diets',
+            as: 'Diets',
         });
     };
 

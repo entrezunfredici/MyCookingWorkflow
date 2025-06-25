@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('BlacklistedFoods', {
+    const BlacklistedFoods = instance.define('BlacklistedFoods', {
         blacklistedFoodId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -16,4 +16,13 @@ module.exports = (instance) => {
         tableName: 'BlacklistedFoods',
         timestamps: true,
     })
+
+    BlacklistedFoods.associate = (models) => {
+        BlacklistedFoods.hasMany(models.UserBlacklistedFoods, {
+            foreignKey: 'blacklistedFoodId',
+            as: 'UserBlacklistedFoods',
+        });
+    }
+
+    return BlacklistedFoods;
 }

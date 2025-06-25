@@ -21,37 +21,25 @@ Object.keys(models).forEach((modelName) => {
   }
 });
 
-async function syncDatabase() {
+const start = async () => {
   try {
-    // Synchroniser les tables sans dépendances externes en premier
-    await models.Roles.sync({ force: true });
-    await models.Diets.sync({ force: true });
-    await models.BlacklistedFoods.sync({ force: true });
-    await models.Users.sync({ force: true }); // Users dépend de Roles
-
-    // Une fois que les tables de base sont créées, synchroniser les tables de jointure
-    // Ces tables ont des clés étrangères vers Users, Diets, BlacklistedFoods
-    await models.UserDiets.sync({ force: true });
-    await models.UserBlacklistedFoods.sync({ force: true });
-
+    await instance.sync({ force: true });
     console.log("reset database success");
   } catch (err) {
     console.error("Erreur lors de la synchronisation de la base :", err);
   }
-}
+};
 
-// instance.sync({ force: true }).then(() => {
-//   console.log("reset database success"); 
-// }).catch((err) => {
-//   console.error("Erreur lors de la synchronisation de la base :", err);
-// });
+// const start = async () => {
+//   try {
+//     await instance.sync({ alter: true });
+//     console.log("reset database success");
+//   } catch (err) {
+//     console.error("Erreur lors de la synchronisation de la base :", err);
+//   }
+// };
 
-// instance.sync({ alter: true }).then(() => {
-//   console.log("database synchronized successfully");
-//   // Ici tu peux démarrer ton serveur ou ta seed
-// }).catch((err) => {
-//   console.error("Erreur lors de la synchronisation de la base :", err);
-// });
+start();
 
 module.exports = {
   instance,
