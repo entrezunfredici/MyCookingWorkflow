@@ -1,0 +1,29 @@
+/* src/styles/variables.css */
+
+:root {
+  /* --- Couleurs de Fond --- */
+  --color-bg-primary-light: #F5F7F8;   /* Arrière-plan principal (clair) */
+  --color-bg-secondary-light: #FFFFFF; /* Arrière-plan secondaire / cartes (clair) */
+
+  --color-bg-primary-dark: #1F2937;    /* Arrière-plan principal (sombre) */
+  --color-bg-secondary-dark: #2D3748;  /* Arrière-plan secondaire / cartes (sombre) */
+
+  /* --- Couleurs de Texte --- */
+  --color-text-primary-light: #333C42;    /* Texte principal (clair) */
+  --color-text-secondary-light: #5A6B7C;  /* Texte secondaire (clair) */
+
+  --color-text-primary-dark: #E2E8F0;     /* Texte principal (sombre) */
+  --color-text-secondary-dark: #CBD5E0;   /* Texte secondaire (sombre) */
+
+  /* --- Couleurs d'Accent et d'Action (Communes aux deux modes) --- */
+  --color-accent-primary: #6D9773;      /* Vert action principal (Ajouter, Confirmer) */
+  --color-accent-secondary: #E6B86C;    /* Jaune action secondaire (Modifier, Alerte) */
+  --color-link: #4299E1;                /* Couleur des liens */
+
+  /* --- Couleurs Neutres / Bordures --- */
+  --color-border-light: #D1D9DF;        /* Bordures / Séparateurs (clair) */
+  --color-input-bg-light: #ECEFF1;      /* Fond des champs de saisie (clair) */
+
+  --color-border-dark: #4A5568;         /* Bordures / Séparateurs (sombre) */
+  --color-input-bg-dark: #283141;       /* Fond des champs de saisie (sombre) */
+}
