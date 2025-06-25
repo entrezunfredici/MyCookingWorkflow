@@ -93,7 +93,7 @@ router.post("/login", user.login);
  *       500:
  *         description: Erreur serveur.
  */
-router.get("/:id", authMiddleware, user.findOne);
+router.get("/:id", user.findOne);
 
 /**
  * @swagger
