@@ -6,9 +6,9 @@ const instance = new Sequelize(dbConfig);
 
 // Models
 const models = {};
+models.Steps = require("./Role.model")(instance);
 
-
-// // Associations
+// Associations
 Object.keys(models).forEach((modelName) => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
