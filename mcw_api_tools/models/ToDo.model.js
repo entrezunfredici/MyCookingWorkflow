@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
     const Todos = instance.define('Todos', {
-        stepId: {
+        todoId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
@@ -39,6 +39,10 @@ module.exports = (instance) => {
         Todos.belongsTo(models.TodoLists, {
             foreignKey: 'todoListId',
             as: 'TodoLists',
+        });
+        Todos.hasMany(models.TodoSteps, {
+            foreignKey: 'todoId',
+            as: 'TodoSteps',
         });
     };
 

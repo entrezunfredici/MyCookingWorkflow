@@ -9,6 +9,7 @@ const models = {};
 models.Steps = require("./Step.model")(instance);
 models.Todos = require("./ToDo.model")(instance);
 models.TodoLists = require("./ToDoList.model")(instance);
+models.TodoSteps = require("./TodoStep.model")(instance);
 
 // Associations
 Object.keys(models).forEach((modelName) => {

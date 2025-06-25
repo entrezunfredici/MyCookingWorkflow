@@ -2,13 +2,11 @@ const { TodoLists } = require("../models/index");
 
 class TodoListService {
     async findAll() {
-        const result = await TodoLists.findAll();
-        return result;
+        return TodoLists.findAll();
     }
 
     async findOne(id) {
-        const todoList = await TodoLists.findByPk(id);
-        return todoList;
+        return await TodoLists.findByPk(id);
     }
 
     async create(data) {

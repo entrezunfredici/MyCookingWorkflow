@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-    return instance.define('TodoLists', {
+    const TodoLists = instance.define('TodoLists', {
         todoListId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -16,4 +16,13 @@ module.exports = (instance) => {
         tableName: 'TodoLists',
         timestamps: true,
     });
+
+    TodoLists.associate = (models) => {
+        TodoLists.hasMany(models.Todos, {
+            foreignKey: 'todoListId',
+            as: 'Todos',
+        });
+    }
+
+    return TodoLists;
 }

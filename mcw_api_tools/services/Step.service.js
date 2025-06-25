@@ -3,13 +3,11 @@ const { Steps } = require("../models/index");
 class StepService {
 
     async findAll() {
-        const Steplist = await Steps.findAll();
-        return Steplist;
+        return await Steps.findAll();
     }
 
     async findOne(StepId) {
-        const Step = await Steps.findByPk(StepId);
-        return Step;
+        return await Steps.findByPk(StepId);
     }
 
     async create(data) {

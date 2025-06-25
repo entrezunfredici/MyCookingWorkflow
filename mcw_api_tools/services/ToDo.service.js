@@ -3,13 +3,11 @@ const { Todos } = require("../models/index");
 class TodoService {
 
     async findAll() {
-        const todoList = await Todos.findAll();
-        return todoList;
+        return await Todos.findAll();
     }
 
     async findOne(todoId) {
-        const todo = await Todos.findByPk(todoId);
-        return todo;
+        return await Todos.findByPk(todoId);
     }
 
     async create(data) {
