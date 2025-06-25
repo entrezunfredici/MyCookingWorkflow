@@ -16,6 +16,10 @@ module.exports = (instance) => {
             type: DataTypes.STRING(1000),
             allowNull: false,
         },
+        position: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     }, {
         tableName: 'Steps',
         timestamps: true,

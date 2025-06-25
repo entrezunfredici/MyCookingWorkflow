@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const swaggerSpec = swaggerJsdoc(require("./config/swagger.config.js"));
 
 // Importation des routes
-
+const stepRoutes = require("./routes/Step.routes.js");
 
 dotenv.config({ path: path.resolve(__dirname, ".env") }); // .env is placed in the root directory of the project
 
@@ -33,10 +33,11 @@ app.use(favicon(__dirname + "/public/favicon.ico"));
 // Middleware pour servir la documentation Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/health', require('express-healthcheck')());
 // Routes
+stepRoutes(app);
 
 // ... Autres middlewares
+app.use('/health', require('express-healthcheck')());
 
 // Si rien n'est trouvé
 app.use(({ res }) => {

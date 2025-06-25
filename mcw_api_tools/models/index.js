@@ -6,7 +6,7 @@ const instance = new Sequelize(dbConfig);
 
 // Models
 const models = {};
-models.Steps = require("./Role.model")(instance);
+models.Steps = require("./Step.model")(instance);
 
 // Associations
 Object.keys(models).forEach((modelName) => {
@@ -14,6 +14,19 @@ Object.keys(models).forEach((modelName) => {
     models[modelName].associate(models);
   }
 });
+
+instance.sync({ force: true }).then(() => {
+  console.log("reset database success"); 
+}).catch((err) => {
+  console.error("Erreur lors de la synchronisation de la base :", err);
+});
+
+// instance.sync({ alter: true }).then(() => {
+//   console.log("database synchronized successfully");
+//   // Ici tu peux démarrer ton serveur ou ta seed
+// }).catch((err) => {
+//   console.error("Erreur lors de la synchronisation de la base :", err);
+// });
 
 module.exports = {
   instance,
