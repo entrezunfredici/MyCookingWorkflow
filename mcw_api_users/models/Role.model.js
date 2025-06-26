@@ -15,14 +15,14 @@ module.exports = (instance) => {
     }, {
         tableName: 'Roles',
         timestamps: true,
-    })
+    });
 
     Roles.associate = (models) => {
         Roles.hasMany(models.Users, {
             foreignKey: 'roleId',
             as: 'Users',
         });
-    }
+    };
 
     return Roles;
 }

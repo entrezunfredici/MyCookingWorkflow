@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
-module.exports = (sequelize) => {
-    const UserBlacklistedFoods = sequelize.define('UserBlacklistedFoods', {
+module.exports = (instance) => {
+    const UserBlacklistedFoods = instance.define('UserBlacklistedFoods', {
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -39,6 +39,5 @@ module.exports = (sequelize) => {
             as: 'BlacklistedFoods',
         });
     };
-
     return UserBlacklistedFoods;
 }

@@ -1,78 +1,75 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (instance) => {
-  const Users = instance.define(
-    'Users',
-    {
-      userId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      roleId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'Roles',
-          key: 'roleId',
+    const Users = instance.define(
+        'Users',
+        {
+            userId: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                allowNull: false,
+                primaryKey: true,
+            },
+            email: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+                unique: true,
+            },
+            password: {
+                type: DataTypes.STRING(255),
+                allowNull: false,
+            },
+            name: {
+                type: DataTypes.STRING(50),
+                allowNull: false,
+            },
+            validEmailCode: {
+                type: DataTypes.STRING(50),
+                allowNull: true,
+            },
+            resetPasswordCode: {
+                type: DataTypes.STRING(50),
+                allowNull: true,
+            },
+            hasValidatedEmail: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
+            },
+            lastLogin: {
+                type: DataTypes.DATE,
+                allowNull: true,
+            },
+            roleId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'Roles',
+                    key: 'roleId',
+                },
+            },
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      validEmailCode: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      resetPasswordCode: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      hasValidatedEmail: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-      lastLogin: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-    },
-    {
-      tableName: 'Users',
-      timestamps: true,
-    }
-  );
+        {
+            tableName: 'Users',
+            timestamps: true,
+        }
+    );
 
-  Users.associate = (models) => {
-    Users.belongsTo(models.Roles, {
-      foreignKey: 'roleId',
-      as: 'Roles',
-    });
+    // Associations
+    Users.associate = (models) => {
+        Users.belongsTo(models.Roles, {
+            foreignKey: 'roleId',
+            as: 'Role',
+        });
+        Users.hasMany(models.UserBlacklistedFoods, {
+            foreignKey: 'userId',
+            as: 'UserBlacklistedFoods',
+        });
+        Users.hasMany(models.UserDiets, {
+            foreignKey: 'userId',
+            as: 'UserDiets',
+        });
+    };
 
-    Users.hasMany(models.UserBlacklistedFoods, {
-      foreignKey: 'userId',
-      as: 'UserBlacklistedFoods',
-    });
-
-    Users.hasMany(models.UserDiets, {
-      foreignKey: 'userId',
-      as: 'UserDiets',
-    });
-  };
-
-  return Users;
-}
+    return Users;
+};
