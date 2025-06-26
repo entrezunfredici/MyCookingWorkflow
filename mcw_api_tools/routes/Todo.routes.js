@@ -38,7 +38,7 @@ const router = express.Router();
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/all", authMiddleware, todo.findAll);
+router.get("/all", todo.findAll);
 
 /**
  * @swagger
@@ -81,7 +81,7 @@ router.get("/all", authMiddleware, todo.findAll);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.get("/:id", authMiddleware, todo.findOne);
+router.get("/:id", todo.findOne);
 
 /**
  * @swagger
@@ -116,7 +116,7 @@ router.get("/:id", authMiddleware, todo.findOne);
  *       500:
  *         description: Erreur interne du serveur
  */
-router.post("/add", authMiddleware, todo.create);
+router.post("/add", todo.create);
 
 /**
  * @swagger
@@ -158,7 +158,7 @@ router.post("/add", authMiddleware, todo.create);
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.put("/:id", authMiddleware, todo.update);
+router.put("/:id", todo.update);
 
 /**
  * @swagger
@@ -181,7 +181,7 @@ router.put("/:id", authMiddleware, todo.update);
  *       500:
  *         description: Erreur interne du serveur.
  */
-router.delete("/:id", authMiddleware, todo.delete);
+router.delete("/:id", todo.delete);
 
 module.exports = (app) => {
     /**
