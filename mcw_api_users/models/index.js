@@ -23,7 +23,16 @@ Object.keys(models).forEach((modelName) => {
 
 const start = async () => {
   try {
-    await instance.sync({ force: true });
+    // Synchronisez d'abord les modèles sans dépendances ou ceux qui sont des cibles de clés étrangères
+    await models.Roles.sync({ force: true });
+    await models.Diets.sync({ force: true });
+    await models.BlacklistedFoods.sync({ force: true });
+
+    // Ensuite, synchronisez les modèles qui dépendent des précédents
+    await models.Users.sync({ force: true }); // Users dépend de Roles
+    await models.UserDiets.sync({ force: true }); // UserDiets dépend de Users et Diets
+    await models.UserBlacklistedFoods.sync({ force: true }); // UserBlacklistedFoods dépend de Users et BlacklistedFoods
+
     console.log("reset database success");
   } catch (err) {
     console.error("Erreur lors de la synchronisation de la base :", err);
