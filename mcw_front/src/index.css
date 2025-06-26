@@ -1,6 +1,7 @@
 /* src/index.css ou src/App.css */
 
 /* Importez vos variables de couleurs */
+@import "tailwindcss";
 @import './colors.css';
 
 /* --- Définition des variables "courantes" pour le mode clair --- */
@@ -11,6 +12,7 @@ body.light-mode {
   --current-text-secondary: var(--color-text-secondary-light);
   --current-border-color: var(--color-border-light);
   --current-input-bg: var(--color-input-bg-light);
+  --current-shadow-color: var(--color-shadow-light);
 }
 
 /* --- Définition des variables "courantes" pour le mode sombre --- */
@@ -21,6 +23,7 @@ body.dark-mode {
   --current-text-secondary: var(--color-text-secondary-dark);
   --current-border-color: var(--color-border-dark);
   --current-input-bg: var(--color-input-bg-dark);
+  --current-shadow-color: var(--color-shadow-dark);
 }
 
 /* --- Styles globaux utilisant les variables "courantes" --- */

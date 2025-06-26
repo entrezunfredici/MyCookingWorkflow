@@ -1,0 +1,43 @@
+@import '../index.css';
+
+.flex-container {
+    display: flex; /* Rend le conteneur un conteneur flex */
+
+    /* Options d'alignement communes pour Flexbox: */
+
+    /* 1. Aligner les éléments sur l'axe principal (horizontal par défaut) */
+    /* justify-content: flex-start; */ /* Par défaut: au début du conteneur */
+    /* justify-content: flex-end; */    /* À la fin */
+    /* justify-content: center; */     /* Au centre */
+    justify-content: space-between; /* Éléments espacés uniformément, premier au début, dernier à la fin */
+    /* justify-content: space-around; */  /* Éléments espacés uniformément avec un peu d'espace avant et après */
+    /* justify-content: space-evenly; */  /* Éléments espacés uniformément avec un espace égal entre eux et les bords */
+
+    /* 2. Aligner les éléments sur l'axe secondaire (vertical par défaut) */
+    align-items: stretch; /* Par défaut: étire les éléments pour remplir la hauteur du conteneur */
+    /* align-items: flex-start; */ /* Aligne les éléments au début verticalement */
+    /* align-items: flex-end; */   /* Aligne les éléments à la fin verticalement */
+    /* align-items: center; */     /* Aligne les éléments au centre verticalement */
+    /* align-items: baseline; */   /* Aligne les éléments sur leur ligne de base de texte */
+
+    /* Autres propriétés utiles: */
+    gap: 10px; /* Ajoute un espace de 10px entre les éléments (plus moderne que margin) */
+
+    /* Pour l'exemple visuel */
+    border: 2px solid #6D9773; /* Couleur d'accent primaire */
+    padding: 15px;
+    background-color: var(--current-bg-secondary); /* Utilise la variable de votre thème */
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si l'espace est insuffisant */
+}
+
+.item {
+    padding: 10px 15px;
+    background-color: var(--color-accent-secondary); /* Couleur d'accent secondaire */
+    color: var(--current-text-primary);
+    border: 1px solid var(--current-border-color);
+    border-radius: 5px;
+    text-align: center;
+}
+
+

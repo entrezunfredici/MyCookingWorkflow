@@ -1,0 +1,53 @@
+@import '../../index.css';
+
+/* src/components/NavBar.css */
+
+.navbar {
+    display: flex; /* Active Flexbox sur le conteneur principal */
+    justify-content: space-between; /* Aligne les éléments (brand, links, actions) aux extrémités et espace le reste */
+    align-items: center; /* Centre les éléments verticalement dans la navbar */
+
+    background-color: var(--current-bg-secondary); /* Couleur de fond selon le thème */
+    color: var(--current-text-primary);          /* Couleur de texte selon le thème */
+    padding: 15px 25px; /* Espacement intérieur */
+    border-bottom: 1px solid var(--current-border-color); /* Bordure inférieure */
+    box-shadow: 0 2px 5px var(--current-shadow-color); /* Légère ombre */
+}
+
+.navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--current-text-primary); /* S'assure que la couleur du texte du lien suit le thème */
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex; /* Active Flexbox pour la liste de liens */
+    list-style: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    gap: 25px; /* Espacement entre les éléments de la liste */
+}
+
+.navbar-links li a {
+    color: var(--current-text-secondary); /* Couleur des liens secondaires */
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.2s ease; /* Transition douce pour le survol */
+}
+
+.navbar-links li a:hover {
+  color: var(--color-accent-primary); /* Changement de couleur au survol */
+}
+
+.navbar-actions {
+  display: flex; /* Active Flexbox pour les actions (boutons) */
+  gap: 15px; /* Espacement entre les boutons */
+  align-items: center; /* Aligne les éléments d'action verticalement */
+}
+
+/* Vous pouvez ajouter des styles spécifiques pour les boutons ici si nécessaire,
+   mais ils devraient déjà hériter de vos styles globaux 'primary', etc. */
+.navbar-actions .primary {
+  /* Vos styles de bouton primaires s'appliqueront ici */
+}

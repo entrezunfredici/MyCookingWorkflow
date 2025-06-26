@@ -26,4 +26,9 @@
 
   --color-border-dark: #4A5568;         /* Bordures / Séparateurs (sombre) */
   --color-input-bg-dark: #283141;       /* Fond des champs de saisie (sombre) */
+
+  --color-border-secondary: #b36700;
+
+  --color-shadow-light: rgba(0, 0, 0, 0.1); /* Ombre légère (clair) */
+  --color-shadow-dark: rgba(0, 0, 0, 0.2); /* Ombre légère (sombre) */
 }

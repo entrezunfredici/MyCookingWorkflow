@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import NavBar from './components/navbar.jsx'
-import Terms from './components/terms.jsx'
+import NavBar from './components/navbar/NavBar.jsx'
+import Terms from './components/terms/Terms.jsx'
 
 function App() {
   const [count, setCount] = useState(0)

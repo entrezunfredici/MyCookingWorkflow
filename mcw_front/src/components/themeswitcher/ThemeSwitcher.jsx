@@ -1,6 +1,6 @@
 // src/components/ThemeSwitcher.jsx
 import React from 'react';
-import { useTheme } from '../context/ThemeContext.jsx'; // Assurez-vous du bon chemin
+import { useTheme } from '../../themeProvider.jsx'; // Assurez-vous du bon chemin
 
 function ThemeSwitcher() {
   // Utilisez le hook useTheme pour accéder au thème actuel et à la fonction de bascule
