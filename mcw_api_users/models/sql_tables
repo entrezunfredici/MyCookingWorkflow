@@ -1,0 +1,61 @@
+-- Table: Roles
+CREATE TABLE "Roles" (
+    "roleId" SERIAL PRIMARY KEY,
+    "name" VARCHAR(50) NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL
+);
+
+-- Table: Users
+CREATE TABLE "Users" (
+    "userId" SERIAL PRIMARY KEY,
+    "email" VARCHAR(100) NOT NULL UNIQUE,
+    "password" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
+    "validEmailCode" VARCHAR(50),
+    "resetPasswordCode" VARCHAR(50),
+    "hasValidatedEmail" BOOLEAN NOT NULL DEFAULT FALSE,
+    "lastLogin" TIMESTAMPTZ,
+    "roleId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL,
+    CONSTRAINT "FK_Users_roleId" FOREIGN KEY ("roleId") REFERENCES "Roles" ("roleId") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+-- Table: Diets
+CREATE TABLE "Diets" (
+    "dietId" SERIAL PRIMARY KEY,
+    "name" VARCHAR(50) NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL
+);
+
+-- Table: BlacklistedFoods
+CREATE TABLE "BlacklistedFoods" (
+    "blacklistedFoodId" SERIAL PRIMARY KEY,
+    "name" VARCHAR(50) NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL
+);
+
+-- Table: UserBlacklistedFoods (Join Table)
+CREATE TABLE "UserBlacklistedFoods" (
+    "userId" INTEGER NOT NULL,
+    "blacklistedFoodId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY ("userId", "blacklistedFoodId"),
+    CONSTRAINT "FK_UserBlacklistedFoods_userId" FOREIGN KEY ("userId") REFERENCES "Users" ("userId") ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT "FK_UserBlacklistedFoods_blacklistedFoodId" FOREIGN KEY ("blacklistedFoodId") REFERENCES "BlacklistedFoods" ("blacklistedFoodId") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Table: UserDiets (Join Table)
+CREATE TABLE "UserDiets" (
+    "userId" INTEGER NOT NULL,
+    "dietId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL,
+    "updatedAt" TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY ("userId", "dietId"),
+    CONSTRAINT "FK_UserDiets_userId" FOREIGN KEY ("userId") REFERENCES "Users" ("userId") ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT "FK_UserDiets_dietId" FOREIGN KEY ("dietId") REFERENCES "Diets" ("dietId") ON DELETE CASCADE ON UPDATE CASCADE
+);
