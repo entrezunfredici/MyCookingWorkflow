@@ -1,0 +1,103 @@
+@import '../../../index.css';
+
+.form {
+    background-color: var(--current-bg-secondary); /* Couleur de fond du formulaire */
+    border: 1px solid var(--current-border-color); /* Bordure légère */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 30px; /* Espace interne */
+    margin: 40px auto; /* Centre le formulaire horizontalement avec une marge verticale */
+    max-width: 450px; /* Largeur maximale pour une meilleure lisibilité */
+    box-shadow: 0 4px 15px var(--current-shadow-color); /* Ombre douce */
+    display: flex;
+    flex-direction: column; /* Organise les éléments en colonne */
+}
+
+.form-title {
+    text-align: center;
+    color: var(--current-text-primary); /* Couleur du titre */
+    margin-bottom: 25px;
+    font-size: 2.2rem;
+    font-weight: 600; /* Légèrement plus gras */
+}
+
+.form-field {
+    margin-bottom: 20px; /* Espace entre chaque champ de formulaire */
+}
+
+.form-field label {
+    display: block; /* Met le label sur sa propre ligne */
+    margin-bottom: 8px; /* Espace entre le label et l'input */
+    color: var(--current-text-secondary); /* Couleur du texte du label */
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="password"],
+.form-field input[type="number"] { /* Cibler les types d'input courants */
+    width: 100%; /* L'input prend toute la largeur disponible */
+    padding: 12px;
+    border: 1px solid var(--current-border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* S'assure que padding et bordure sont inclus dans la largeur */
+    background-color: var(--current-bg-primary); /* Couleur de fond des inputs */
+    color: var(--current-text-primary); /* Couleur du texte dans les inputs */
+}
+
+.form-field input::placeholder {
+    color: var(--current-text-tertiary); /* Couleur du texte placeholder */
+}
+
+.form-field input:focus {
+    outline: none; /* Supprime l'outline par défaut du navigateur */
+    border-color: var(--color-accent-primary); /* Couleur de la bordure au focus */
+    box-shadow: 0 0 0 3px var(--color-accent-light); /* Anneau de focus plus doux */
+}
+
+.form-submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-accent-primary); /* Couleur principale du bouton */
+    color: white; /* Couleur du texte du bouton */
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer; /* Indique que le bouton est cliquable */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Animation douce au survol/clic */
+    margin-top: 10px; /* Espace au-dessus du bouton */
+}
+
+.form-submit-button:hover {
+    background-color: var(--color-accent-dark); /* Couleur du bouton au survol */
+    transform: translateY(-1px); /* Léger mouvement vers le haut au survol */
+}
+
+.form-submit-button:active {
+    transform: translateY(0); /* Retour à la position normale au clic */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    .form {
+        margin: 20px 15px; /* Marges réduites sur petits écrans */
+        padding: 20px;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .form-field input {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    .form-submit-button {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
