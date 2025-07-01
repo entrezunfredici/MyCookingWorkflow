@@ -4,7 +4,7 @@ const swaggerOptions = {
         info: {
             title: 'API Documentation',
             version: '1.0.0',
-            description: 'Documentation de l\'API MyMemoMaster avec OpenAPI et Swagger',
+            description: 'Documentation de l\'API  MCW api users avec OpenAPI et Swagger',
         },
         servers: [
             {

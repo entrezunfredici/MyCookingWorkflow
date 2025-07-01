@@ -42,6 +42,5 @@ export const eraseCookie = (name) => {
 
 // Fonction pour vérifier si l'utilisateur est authentifié
 export const isAuthenticated = () => {
-  // Remplace 'your_auth_token' par le nom réel de ton cookie de token
-    return getCookie('your_auth_token') !== null;
+  return getCookie('auth_token') !== null;
 };

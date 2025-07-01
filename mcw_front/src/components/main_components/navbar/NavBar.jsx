@@ -11,7 +11,7 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        eraseCookie('your_auth_token'); // Supprime le cookie d'authentification
+        eraseCookie('auth_token');
         navigate('/login'); // Redirige vers la page de connexion après la déconnexion
     };
 

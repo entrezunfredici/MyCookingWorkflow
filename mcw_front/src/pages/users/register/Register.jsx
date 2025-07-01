@@ -1,39 +1,58 @@
 import React from 'react';
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
 import Form from '../../../components/main_components/form/Form.jsx';
 import { useState } from 'react';
+import { userService } from '../../../utils/apiService.js';
 
-const Register = () => {
-    const [formData, setFormData] = useState({});
+const Register = () => { // Renommé de RegisterPage à Register
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
+    const registerFields = [
+        { name: 'username', label: 'Nom d\'utilisateur', type: 'text', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+        { name: 'password', label: 'Mot de passe', type: 'password', required: true },
+        { name: 'confirmPassword', label: 'Confirmer le mot de passe', type: 'password', required: true },
+    ];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form submitted:', formData);
+    const handleRegisterSubmit = async (formData) => {
+        setError(null);
+        setLoading(true);
+
+        if (formData.password !== formData.confirmPassword) {
+            setError('Les mots de passe ne correspondent pas !');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const { confirmPassword, ...dataToSend } = formData;
+
+            const response = await userService.register(dataToSend);
+
+            console.log(response);
+            navigate('/login');
+        } catch (err) {
+            console.error('Erreur d\'inscription :', err);
+            setError(err || 'Échec de l\'inscription. Veuillez réessayer.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="register-container">
+        <div>
             <Form
-                title="Register"
-                fields={[
-                    { name: 'username', label: 'Username', type: 'text', required: true },
-                    { name: 'email', label: 'Email', type: 'email', required: true },
-                    { name: 'password', label: 'Password', type: 'password', required: true },
-                ]}
-                onSubmit={handleSubmit}
-                onChange={handleChange}
-                submitButtonText="Register"
+                title="Inscription"
+                fields={registerFields}
+                onSubmit={handleRegisterSubmit}
+                submitButtonText={loading ? 'Inscription en cours...' : 'S\'inscrire'}
             />
+            {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         </div>
     );
-}
+};
 
 export default Register;
