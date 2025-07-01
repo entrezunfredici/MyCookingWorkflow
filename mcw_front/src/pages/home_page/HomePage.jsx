@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '../../containers/grid/GridContainer.jsx';
 import './HomePage.css';
 
 const HomePage = () => {

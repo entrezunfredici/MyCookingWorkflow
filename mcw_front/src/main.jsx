@@ -1,13 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { ThemeProvider } from './styles/themeProvider'
-import './index.css'
-import App from './App.jsx'
+import React from 'react'; // React est nécessaire pour JSX, même si tu n'appelles pas React.StrictMode
+import ReactDOM from 'react-dom/client'; // Importe createRoot depuis react-dom/client
+import App from './App.jsx'; // Importe ton composant App
+import './index.css'; // Ton CSS global
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </StrictMode>,
-)
+// Crée la racine de rendu et rend ton composant App
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);

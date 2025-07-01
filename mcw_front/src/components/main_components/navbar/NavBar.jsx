@@ -1,30 +1,45 @@
-import React from 'react'; // React is implicitly imported by bundlers like Vite/Next.js but it's good practice to keep it.
+// src/components/main_components/navbar/NavBar.jsx
+
+import React from 'react';
+import { Link } from 'react-router-dom'; // Assure-toi que Link est bien importé ici !
+import { isAuthenticated, eraseCookie } from '../../../utils/cookieManager';
+import { useNavigate } from 'react-router-dom';
 import ThemeSwitcher from '../../../styles/theme_switcher/ThemeSwitcher.jsx';
-import './NavBar.css'
+import './NavBar.css';
 
 const NavBar = () => {
-  // Components return JSX (JavaScript XML), which looks like HTML
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        eraseCookie('your_auth_token'); // Supprime le cookie d'authentification
+        navigate('/login'); // Redirige vers la page de connexion après la déconnexion
+    };
+
     return (
         <nav className="navbar">
             <div className="navbar-brand">
-                <a href="/">My Cooking Workflow</a>
+                {/* MODIFIE ICI : 'link' avec un 'l' minuscule devient 'Link' avec un 'L' majuscule */}
+                <Link to="/">My Cooking Workflow</Link> 
             </div>
 
             <ul className="navbar-links">
-                <li><a href="/"></a></li>
-                <li><a href="/">calendrier</a></li>
-                <li><a href="/">Todo</a></li>
-                <li><a href="/profile">Profil</a></li>
+                <li><Link to="/">Accueil</Link></li>
+                <li><Link to="/calendar">calendrier</Link></li>
+                <li><Link to="/todo">Todo</Link></li>
+                <li><Link to="/shop">liste de courses</Link></li>
+                <li><Link to="/profile">Profil</Link></li>
             </ul>
 
             <div className="navbar-actions">
-                {/* Votre bouton de changement de thème */}
                 <ThemeSwitcher />
-                <button className="primary">Se connecter</button> {/* Exemple de bouton */}
+                {isAuthenticated() ? (
+                    <button onClick={handleLogout} className="primary">Déconnexion</button>
+                ) : (
+                    <Link to="/login" className="primary">Se connecter</Link>
+                )}
             </div>
         </nav>
     );
-}
+};
 
-// Don't forget to export your component so it can be used elsewhere!
 export default NavBar;

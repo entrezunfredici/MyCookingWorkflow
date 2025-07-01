@@ -1,9 +1,9 @@
 import React from 'react';
-import './Login.css';
-import { useState } from 'react';
+import './Register.css';
 import Form from '../../../components/main_components/form/Form.jsx';
+import { useState } from 'react';
 
-const Login = () => {
+const Register = () => {
     const [formData, setFormData] = useState({});
 
     const handleChange = (e) => {
@@ -20,18 +20,20 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
+        <div className="register-container">
             <Form
-                title="Login"
+                title="Register"
                 fields={[
                     { name: 'username', label: 'Username', type: 'text', required: true },
+                    { name: 'email', label: 'Email', type: 'email', required: true },
                     { name: 'password', label: 'Password', type: 'password', required: true },
                 ]}
                 onSubmit={handleSubmit}
-                submitButtonText="Login"
+                onChange={handleChange}
+                submitButtonText="Register"
             />
         </div>
     );
 }
 
-export default Login;
+export default Register;
