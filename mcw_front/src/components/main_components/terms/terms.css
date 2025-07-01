@@ -1,3 +1,11 @@
 @import '../../../index.css';
 
-
+.footer {
+    background-color: var(--current-bg-secondary);
+    color: var(--current-text-secondary);
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}

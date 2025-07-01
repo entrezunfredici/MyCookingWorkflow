@@ -4,6 +4,14 @@
 @import "tailwindcss";
 @import './styles/colors.css';
 
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
 body.light-mode {
   --current-bg-primary: var(--color-bg-primary-light);
   --current-bg-secondary: var(--color-bg-secondary-light);
@@ -12,6 +20,7 @@ body.light-mode {
   --current-border-color: var(--color-border-light);
   --current-input-bg: var(--color-input-bg-light);
   --current-shadow-color: var(--color-shadow-light);
+  --current-elem-border-color: var(--color-border-secondary);
 }
 
 body.dark-mode {
@@ -22,6 +31,7 @@ body.dark-mode {
   --current-border-color: var(--color-border-dark);
   --current-input-bg: var(--color-input-bg-dark);
   --current-shadow-color: var(--color-shadow-dark);
+  --elem-border-color: var(--color-border-secondary);
 }
 
 body {
@@ -35,36 +45,27 @@ body {
 }
 
 footer {
-    background-color: var(--current-bg-secondary); /* Couleur de fond du footer */
-    color: var(--current-text-secondary); /* Couleur du texte */
-    padding: 20px; /* Espacement interne */
-    text-align: center; /* Centrer le texte */
-    width: 100%; /* Occupe toute la largeur */
-    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
-    z-index: 1000; /* Assure que le footer est au-dessus des autres éléments */
-}
-
-footer {
     position: fixed;
     bottom: 0;
     left: 0;
+    width: 100%;
 }
 
 body {
-    margin-bottom: 80px;
+  margin-top: 100px;
+  margin-bottom: 80px;
 }
 
 
-/* Media query pour les écrans mobiles (largeur max 768px - valeur courante) */
 @media (max-width: 768px) {
     footer {
-        position: static; /* Le footer revient à son flux normal */
-        margin-top: 50px; /* Espacement au-dessus du footer quand il est en position statique */
-        /* Vous pouvez ajuster cette marge si nécessaire */
+        position: static;
+        margin-top: 50px;
+        width: 100%;
     }
 
     body {
-        margin-bottom: 0; /* Plus besoin de la marge en bas du body sur mobile */
+      margin-bottom: 0;
     }
 }
 
