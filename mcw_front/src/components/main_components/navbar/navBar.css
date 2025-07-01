@@ -1,0 +1,57 @@
+@import '../../../index.css';
+
+/* src/components/NavBar.css */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--current-bg-secondary);
+    color: var(--current-text-primary);
+    padding: 15px 25px;
+    border-bottom: 1px solid var(--current-border-color);
+    box-shadow: 0 2px 5px var(--current-shadow-color);
+
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--current-text-primary);
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 25px;
+}
+
+.navbar-links li a {
+    color: var(--current-text-secondary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-links li a:hover {
+    color: var(--color-accent-primary);
+}
+
+.navbar-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.navbar-actions .primary {
+    /* Vos styles de bouton primaires s'appliqueront ici */
+}

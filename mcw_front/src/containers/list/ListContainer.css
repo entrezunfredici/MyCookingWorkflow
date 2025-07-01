@@ -1,0 +1,36 @@
+@import '../../index.css';
+
+.list-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid var(--current-elem-border-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--current-shadow-color);
+}
+
+.list-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--current-border-color);
+    padding-bottom: 10px;
+}
+
+.list-items {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--current-elem-border-color);
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}

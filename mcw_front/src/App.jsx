@@ -1,33 +1,30 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import NavBar from './components/main_components/navbar/NavBar.jsx'
+import Terms from './components/main_components/terms/Terms.jsx'
+import Grid from './containers/grid/GridContainer.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
+  const recipes = ["test", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10"]
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        < NavBar />
+      </header>
+      <main>
+        <Grid columns={3}>
+          {recipes.map((recipe, index) => (
+            <div key={index} className="grid-item">
+              {recipe}
+            </div>
+          ))}
+        </Grid>
+      </main>
+      <footer>
+        <Terms />
+      </footer>
     </>
   )
 }
