@@ -11,7 +11,7 @@ const Register = () => { // Renommé de RegisterPage à Register
     const [loading, setLoading] = useState(false);
 
     const registerFields = [
-        { name: 'username', label: 'Nom d\'utilisateur', type: 'text', required: true },
+        { name: 'name', label: 'Nom d\'utilisateur', type: 'text', required: true },
         { name: 'email', label: 'Email', type: 'email', required: true },
         { name: 'password', label: 'Mot de passe', type: 'password', required: true },
         { name: 'confirmPassword', label: 'Confirmer le mot de passe', type: 'password', required: true },
