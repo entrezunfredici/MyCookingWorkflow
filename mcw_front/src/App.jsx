@@ -12,7 +12,7 @@ function App() {
         < NavBar />
       </header>
       <main>
-
+        
       </main>
       <footer>
         <Terms />

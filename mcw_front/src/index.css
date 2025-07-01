@@ -2,9 +2,8 @@
 
 /* Importez vos variables de couleurs */
 @import "tailwindcss";
-@import './colors.css';
+@import './styles/colors.css';
 
-/* --- Définition des variables "courantes" pour le mode clair --- */
 body.light-mode {
   --current-bg-primary: var(--color-bg-primary-light);
   --current-bg-secondary: var(--color-bg-secondary-light);
@@ -15,7 +14,6 @@ body.light-mode {
   --current-shadow-color: var(--color-shadow-light);
 }
 
-/* --- Définition des variables "courantes" pour le mode sombre --- */
 body.dark-mode {
   --current-bg-primary: var(--color-bg-primary-dark);
   --current-bg-secondary: var(--color-bg-secondary-dark);
@@ -26,7 +24,6 @@ body.dark-mode {
   --current-shadow-color: var(--color-shadow-dark);
 }
 
-/* --- Styles globaux utilisant les variables "courantes" --- */
 body {
   background-color: var(--current-bg-primary);
   color: var(--current-text-primary);
@@ -35,6 +32,40 @@ body {
   padding: 0;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease; /* Transition douce pour le changement de thème */
+}
+
+footer {
+    background-color: var(--current-bg-secondary); /* Couleur de fond du footer */
+    color: var(--current-text-secondary); /* Couleur du texte */
+    padding: 20px; /* Espacement interne */
+    text-align: center; /* Centrer le texte */
+    width: 100%; /* Occupe toute la largeur */
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la largeur */
+    z-index: 1000; /* Assure que le footer est au-dessus des autres éléments */
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+body {
+    margin-bottom: 80px;
+}
+
+
+/* Media query pour les écrans mobiles (largeur max 768px - valeur courante) */
+@media (max-width: 768px) {
+    footer {
+        position: static; /* Le footer revient à son flux normal */
+        margin-top: 50px; /* Espacement au-dessus du footer quand il est en position statique */
+        /* Vous pouvez ajuster cette marge si nécessaire */
+    }
+
+    body {
+        margin-bottom: 0; /* Plus besoin de la marge en bas du body sur mobile */
+    }
 }
 
 /* Exemple de style pour un conteneur ou une carte */

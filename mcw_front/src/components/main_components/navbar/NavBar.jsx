@@ -1,5 +1,5 @@
 import React from 'react'; // React is implicitly imported by bundlers like Vite/Next.js but it's good practice to keep it.
-import ThemeSwitcher from '../themeswitcher/ThemeSwitcher.jsx';
+import ThemeSwitcher from '../../../styles/theme_switcher/ThemeSwitcher.jsx';
 import './navBar.css'
 
 const NavBar = () => {
