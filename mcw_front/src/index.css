@@ -1,68 +1,153 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* src/index.css ou src/App.css */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* Importez vos variables de couleurs */
+@import "tailwindcss";
+@import './styles/colors.css';
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+body.light-mode {
+  --current-bg-primary: var(--color-bg-primary-light);
+  --current-bg-secondary: var(--color-bg-secondary-light);
+  --current-text-primary: var(--color-text-primary-light);
+  --current-text-secondary: var(--color-text-secondary-light);
+  --current-border-color: var(--color-border-light);
+  --current-input-bg: var(--color-input-bg-light);
+  --current-shadow-color: var(--color-shadow-light);
+  --current-elem-border-color: var(--color-border-secondary);
 }
-a:hover {
-  color: #535bf2;
+
+body.dark-mode {
+  --current-bg-primary: var(--color-bg-primary-dark);
+  --current-bg-secondary: var(--color-bg-secondary-dark);
+  --current-text-primary: var(--color-text-primary-dark);
+  --current-text-secondary: var(--color-text-secondary-dark);
+  --current-border-color: var(--color-border-dark);
+  --current-input-bg: var(--color-input-bg-dark);
+  --current-shadow-color: var(--color-shadow-dark);
+  --elem-border-color: var(--color-border-secondary);
 }
 
 body {
+  background-color: var(--current-bg-primary);
+  color: var(--current-text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Exemple de police */
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transition douce pour le changement de thème */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
-button {
+body {
+  margin-top: 100px;
+  margin-bottom: 80px;
+}
+
+
+@media (max-width: 768px) {
+    footer {
+        position: static;
+        margin-top: 50px;
+        width: 100%;
+    }
+
+    body {
+      margin-bottom: 0;
+    }
+}
+
+/* Exemple de style pour un conteneur ou une carte */
+.card {
+  background-color: var(--current-bg-secondary);
+  color: var(--current-text-primary);
+  border: 1px solid var(--current-border-color);
+  padding: 20px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+h1, h2, h3, h4, h5, h6 {
+  color: var(--current-text-primary);
+}
+
+/* Styles pour les boutons d'action principaux */
+button.primary {
+  background-color: var(--color-accent-primary);
+  color: white; /* Le texte sur ces boutons sera toujours blanc pour un bon contraste */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button.primary:hover {
+  filter: brightness(1.1); /* Rendre légèrement plus clair au survol */
+}
+
+button.primary:active {
+  transform: translateY(1px); /* Léger effet de pression */
+}
+
+/* Styles pour les boutons d'action secondaires */
+button.secondary {
+  background-color: var(--color-accent-secondary);
+  color: var(--current-text-primary); /* Texte de couleur primaire du mode actuel */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button.secondary:hover {
+  filter: brightness(1.1);
+}
+
+button.secondary:active {
+  transform: translateY(1px);
+}
+
+/* Styles pour les liens */
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Styles pour les champs de saisie */
+input, textarea, select {
+  background-color: var(--current-input-bg);
+  color: var(--current-text-primary);
+  border: 1px solid var(--current-border-color);
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-accent-primary); /* Bordure accentuée au focus */
+  box-shadow: 0 0 0 2px rgba(109, 151, 115, 0.2); /* Ombre légère de l'accent */
 }

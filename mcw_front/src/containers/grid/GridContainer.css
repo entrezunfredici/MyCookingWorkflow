@@ -1,0 +1,21 @@
+@import '../../index.css';
+
+.grid-container {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+}
+
+.grid-container > div {
+    border: 2px solid var(--current-elem-border-color);
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px var(--current-shadow-color);
+}
+
+/* Media query pour la responsivité (exemple) */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}

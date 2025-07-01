@@ -12,7 +12,6 @@ class UserService {
         });
     }
 
-    //this function doesn't work
     async findByEmail(email) {
         console.log("mail")
         const user = await Users.findOne({

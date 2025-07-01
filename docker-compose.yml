@@ -11,7 +11,7 @@ services:
       - "--entrypoints.frontend_entrypoint.address=:${FRONTEND_PORT}"
     ports:
       - "80:80"
-      - "8080:8080" # Pour l'interface UI de Traefik (si vous l'utilisez)
+      - "8080:8080"
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -24,7 +24,6 @@ services:
       context: ./mcw_front
       dockerfile: Dockerfile
     container_name: mcw_frontend
-    # Nous allons améliorer les depends_on pour attendre que les API soient saines
     depends_on:
       api_users:
         condition: service_healthy
@@ -34,7 +33,7 @@ services:
         condition: service_healthy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mcw_frontend.rule=Host(`localhost`)" # Supprimé PathPrefix pour couvrir toutes les routes sous localhost
+      - "traefik.http.routers.mcw_frontend.rule=Host(`localhost`)"
       - "traefik.http.routers.mcw_frontend.entrypoints=frontend_entrypoint"
       - "traefik.http.services.mcw_frontend.loadbalancer.server.port=80"
     networks:
@@ -130,6 +129,7 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
       - AUTH_JWT_EXPIRES_IN=${AUTH_JWT_EXPIRES_IN}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_users:
         condition: service_healthy
@@ -160,6 +160,7 @@ services:
       - API_FOOD_PORT=${API_FOOD_PORT}
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_food:
         condition: service_healthy
@@ -189,6 +190,7 @@ services:
       - API_TOOLS_PORT=${API_TOOLS_PORT}
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_tools:
         condition: service_healthy
