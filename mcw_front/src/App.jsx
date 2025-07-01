@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './styles/themeProvider'; // Assure-toi que ce chemin est correct
 import './App.css'; // Ton CSS spécifique à App (si tu en as un)

@@ -129,6 +129,7 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
       - AUTH_JWT_EXPIRES_IN=${AUTH_JWT_EXPIRES_IN}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_users:
         condition: service_healthy
@@ -159,6 +160,7 @@ services:
       - API_FOOD_PORT=${API_FOOD_PORT}
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_food:
         condition: service_healthy
@@ -188,6 +190,7 @@ services:
       - API_TOOLS_PORT=${API_TOOLS_PORT}
       - ENVIRONMENT=${ENVIRONMENT}
       - JWT_SECRET=${JWT_SECRET}
+      - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
     depends_on:
       postgres_tools:
         condition: service_healthy
