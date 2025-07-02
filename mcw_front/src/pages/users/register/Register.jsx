@@ -3,7 +3,7 @@ import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import Form from '../../../components/main_components/form/Form.jsx';
 import { useState } from 'react';
-import { userService } from '../../../utils/apiService.js';
+import { userService } from '../../../utils/apiUserService.js';
 
 const Register = () => { // Renommé de RegisterPage à Register
     const navigate = useNavigate();

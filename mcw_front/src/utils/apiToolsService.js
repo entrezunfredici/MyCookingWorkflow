@@ -44,44 +44,6 @@ const usersApiClient = createApiClient(API_URLS.users);
 const foodApiClient = createApiClient(API_URLS.food);
 const toolsApiClient = createApiClient(API_URLS.tools);
 
-export const userService = {
-    login: async (credentials) => {
-        try {
-            const response = await usersApiClient.post('/users/login', credentials);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || error.message;
-        }
-    },
-    register: async (userData) => {
-        try {
-            const response = await usersApiClient.post('/users/register', userData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || error.message;
-        }
-    },
-};
-
-export const foodService = {
-    getRecipes: async () => {
-        try {
-            const response = await foodApiClient.get('');
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || error.message;
-        }
-    },
-    addRecipe: async (recipeData) => {
-        try {
-            const response = await foodApiClient.post('', recipeData);
-            return response.data;
-        } catch (error) {
-            throw error.response?.data || error.message;
-        }
-    },
-};
-
 export const toolsService = {
     getTools: async () => {
         try {
