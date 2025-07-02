@@ -1,56 +1,130 @@
-import axios from 'axios';
-import { getCookie, eraseCookie } from '../utils/cookieManager'; // Pour récupérer le token
+import { toolsApiClient } from "./api_client";
 
-const API_URLS = {
-    users: 'http://mcw-users.localhost',
-    food: 'http://mcw-food.localhost',
-    tools: 'http://mcw-tools.localhost',
-};
-
-// Fonction générique pour créer une instance Axios avec intercepteur
-const createApiClient = (baseURL) => {
-    const client = axios.create({
-        baseURL,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-  // Intercepteur pour ajouter le token d'authentification à chaque requête
-    client.interceptors.request.use(config => {
-        const token = getCookie('auth_token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    }, error => {
-        return Promise.reject(error);
-    });
-
-    client.interceptors.response.use(response => response, error => {
-        if (error.response && error.response.status === 401) {
-            // Gérer la déconnexion ou la redirection si le token est invalide/expiré
-            eraseCookie('auth_token');
-            window.location.href = '/login';
-        }
-        return Promise.reject(error);
-    });
-
-    return client;
-};
-
-// Crée des clients Axios pour chaque API
-const usersApiClient = createApiClient(API_URLS.users);
-const foodApiClient = createApiClient(API_URLS.food);
-const toolsApiClient = createApiClient(API_URLS.tools);
-
-export const toolsService = {
-    getTools: async () => {
+export const stepService = {
+    getAllSteps: async () => {
         try {
-            const response = await toolsApiClient.get('');
+            const response = await toolsApiClient.get(`/steps/all`);
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
         }
     },
+    getStepById: async (stepId) => {
+        try {
+            const response = await toolsApiClient.get(`/steps/${stepId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    editStep: async (stepId, stepData) => {
+        try {
+            const response = await toolsApiClient.put(`/steps/${stepId}`, stepData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    deleteStep: async (stepId) => {
+        try {
+            const response = await toolsApiClient.delete(`/steps/${stepId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    createStep: async (stepData) => {
+        try {
+            const response = await toolsApiClient.post(`/steps/add`, stepData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
+
+export const todoService = {
+    getAllTodos: async () => {
+        try {
+            const response = await toolsApiClient.get(`/todos/all`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    getTodoById: async (todoId) => {
+        try {
+            const response = await toolsApiClient.get(`/todos/${todoId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    editTodo: async (todoId, todoData) => {
+        try {
+            const response = await toolsApiClient.put(`/todos/${todoId}`, todoData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    deleteTodo: async (todoId) => {
+        try {
+            const response = await toolsApiClient.delete(`/todos/${todoId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    createTodo: async (todoData) => {
+        try {
+            const response = await toolsApiClient.post(`/todos/add`, todoData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
+
+export const TodoList = {
+    getAll: async () => {
+        try {
+            const response = await toolsApiClient.get('/todolist/all');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    getTodoListById: async (listId) => {
+        try {
+            const response = await toolsApiClient.get(`/todolist/${listId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    updateTodoList: async (listId, listData) => {
+        try {
+            const response = await toolsApiClient.put(`/todolist/${listId}`, listData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    addTodoList: async (name) => {
+        try {
+            const response = await toolsApiClient.post('/todolist/add', { name });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+    deleteTodoList: async (listId) => {
+        try {
+            const response = await toolsApiClient.delete(`/todolist/${listId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
 };
