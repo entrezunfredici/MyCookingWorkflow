@@ -118,7 +118,7 @@ export const Roles = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
-    }
+    },
 
     getRoleById: async (roleId) => {
         try {

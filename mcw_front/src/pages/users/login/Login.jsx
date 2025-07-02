@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Form from '../../../components/main_components/form/Form.jsx';
 import { setCookie } from '../../../utils/cookieManager';
-import { userService } from '../../../utils/apiService.js';
+import { userService } from '../../../utils/apiUserService.js';
 
 
 const Login = () => {
