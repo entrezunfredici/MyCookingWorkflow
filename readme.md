@@ -9,7 +9,7 @@ Cette application web a été conçue pour vous aider à gérer vos **plans de r
 * **Génération de listes de courses** basées sur vos recettes et plans de repas.
 * **Gestion complète de vos recettes** : ajoutez, modifiez ou supprimez-les facilement.
 * **Recherche de recettes** par ingrédients ou mots-clés.
-* **Suggestions de recettes personnalisées** basées sur vos critères, votre historique et votre inventaire.
+* **Suggestions de recettes personnalisé** basées sur vos critères, votre historique et votre inventaire.
 
 ---
 
@@ -17,11 +17,13 @@ Cette application web a été conçue pour vous aider à gérer vos **plans de r
 
 Voici une vue d'ensemble de l'architecture des services de l'application :
 
-![Architecture de My Cooking Workflow](images/image_7c6c7c.png)
+![Architecture de My Cooking Workflow](images/mcw_architecture.svg)
 
 ## Choix techniques :
-L'application est construite en utilisant une architecture microservice, avec les technologies suivantes :  
-* le langage choisi pour le back et le front est le JS car il est adapté pour les applications web modernes et permet une cohérence entre le frontend et le backend.  
+
+L'application est construite en utilisant une architecture microservice, avec les technologies suivantes :
+
+* le langage choisi pour le back et le front est le JS car il est adapté pour les applications web modernes et permet une cohérence entre le frontend et le backend.
 * **Frontend** : Développé en **Next.js** pour une expérience utilisateur fluide et réactive.
 * **Backend** : Utilise **Node.js** avec **Express** pour gérer les APIs.
 * **Base de données** : PostgreSQL pour stocker les données des utilisateurs, des recettes et des outils.
@@ -30,6 +32,7 @@ L'application est construite en utilisant une architecture microservice, avec le
 * **Gestion des environnements** : Utilisation de variables d'environnement pour configurer les services, assurant ainsi une flexibilité et une sécurité accrues.
 * **pgAdmin** : Fournit une interface graphique pour gérer les bases de données PostgreSQL, facilitant ainsi la visualisation et la manipulation des données.
 * 
+
 ---
 
 ## Installation
@@ -98,5 +101,6 @@ pgAdmin (interface de gestion PostgreSQL) :
 http://localhost:8081 (ou le port que vous avez défini pour PGADMIN_PORT)
 
 ## Autheur:
+
 * **Nom** : Macabiau Frederic
 * **Email** : superfred2468@gmail.com or frederic.macabiau@ynov.com
