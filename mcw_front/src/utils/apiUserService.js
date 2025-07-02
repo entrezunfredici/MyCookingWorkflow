@@ -1,48 +1,4 @@
-import axios from 'axios';
-import { getCookie, eraseCookie } from '../utils/cookieManager'; // Pour récupérer le token
-
-const API_URLS = {
-    users: 'http://mcw-users.localhost',
-    food: 'http://mcw-food.localhost',
-    tools: 'http://mcw-tools.localhost',
-};
-
-// Fonction générique pour créer une instance Axios avec intercepteur
-const createApiClient = (baseURL) => {
-    const client = axios.create({
-        baseURL,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-  // Intercepteur pour ajouter le token d'authentification à chaque requête
-    client.interceptors.request.use(config => {
-        const token = getCookie('auth_token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    }, error => {
-        return Promise.reject(error);
-    });
-
-    client.interceptors.response.use(response => response, error => {
-        if (error.response && error.response.status === 401) {
-            // Gérer la déconnexion ou la redirection si le token est invalide/expiré
-            eraseCookie('auth_token');
-            window.location.href = '/login';
-        }
-        return Promise.reject(error);
-    });
-
-    return client;
-};
-
-// Crée des clients Axios pour chaque API
-const usersApiClient = createApiClient(API_URLS.users);
-const foodApiClient = createApiClient(API_URLS.food);
-const toolsApiClient = createApiClient(API_URLS.tools);
+import { usersApiClient } from './api_client';
 
 export const userService = {
     login: async (credentials) => {
@@ -53,6 +9,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     register: async (userData) => {
         try {
             const response = await usersApiClient.post('/users/register', userData);
@@ -61,6 +18,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     getUserById: async (userId) => {
         try {
             const response = await usersApiClient.get(`/users/${userId}`);
@@ -69,6 +27,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     updateUser: async (userId, userData) => {
         try {
             const response = await usersApiClient.put(`/users/${userId}`, userData);
@@ -77,6 +36,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     deleteUser: async (userId) => {
         try {
             await usersApiClient.delete(`/users/${userId}`);
@@ -85,7 +45,8 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
-    changePAssword: async (userId, passwordData) => {
+
+    changePassword: async (userId, passwordData) => {
         try {
             const response = await usersApiClient.put(`/users/${userId}/change-password`, passwordData);
             return response.data;
@@ -93,6 +54,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     addRole: async (userId, roleData) => {
         try {
             const response = await usersApiClient.post(`/users/${userId}/role`, roleData);
@@ -101,6 +63,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     removeRole: async (userId, roleId) => {
         try {
             const response = await usersApiClient.delete(`/users/${userId}/role/${roleId}`);
@@ -109,6 +72,7 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
     updateRole: async (userId, roleId, roleData) => {
         try {
             const response = await usersApiClient.put(`/users/${userId}/role`, roleData);
@@ -117,4 +81,126 @@ export const userService = {
             throw error.response?.data || error.message;
         }
     },
+
+    verifyEmail: async (datas) => {
+        try {
+            const response = await usersApiClient.post('/users/verify-email', datas);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    forgottenPassword: async (email) => {
+        try {
+            const response = await usersApiClient.post('/users/forgotten-password', { email });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    resetPassword: async (mail, code , newPassword) => {
+        try {
+            const response = await usersApiClient.post('/users/reset-password', { mail, code, newPassword});
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
 };
+
+export const Roles = {
+    getAll: async () => {
+        try {
+            const response = await usersApiClient.get('/roles/all');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+
+    getRoleById: async (roleId) => {
+        try {
+            const response = await usersApiClient.get(`/roles/${roleId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    editRole: async (roleId, roleData) => {
+        try {
+            const response = await usersApiClient.put(`/roles/${roleId}`, roleData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    deleteRole: async (roleId) => {
+        try {
+            const response = await usersApiClient.delete(`/roles/${roleId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    createRole: async (roleData) => {
+        try {
+            const response = await usersApiClient.post('/roles', roleData);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+};
+
+export const BlacklistedFood = {
+    getAll: async () => {
+        try {
+            const response = await usersApiClient.get('/blacklisted-food/all');
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    getBlacklistedFoodById: async (foodId) => {
+        try {
+            const response = await usersApiClient.get(`/blacklisted-food/${foodId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    updateBlacklistedFood: async (foodId, foodData) => {
+        try {
+            const response = await usersApiClient.put(`/blacklisted-food/${foodId}`, foodData);
+            return response.data;
+        }
+        catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    addBlacklistedFood: async (name) => {
+        try {
+            const response = await usersApiClient.post('/blacklisted-food/add', { name });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    },
+
+    deleteBlacklistedFood: async (foodId) => {
+        try {
+            const response = await usersApiClient.delete(`/blacklisted-food/${foodId}`);
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
+    }
+}
