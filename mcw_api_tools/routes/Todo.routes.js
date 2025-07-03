@@ -183,6 +183,39 @@ router.put("/:id", todo.update);
  */
 router.delete("/:id", todo.delete);
 
+/**
+ * @swagger 
+ * /todos/{id}/completed:
+ *   put:
+ *     summary: Met à complété une tâche existant
+ *     tags: [todos]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID du tâche à mettre à jour
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true 
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              completed:
+ *               type: boolean
+ *               example: true
+ *     responses:
+ *       200:
+ *         description: étape mis à jour avec succès.
+ *       404:
+ *         description: étape non trouvé.
+ *       500:
+ *         description: Erreur interne du serveur.
+ */
+router.put("/:id/completed", authMiddleware, todo.setCompleted);
+
 module.exports = (app) => {
     /**
    * @swagger

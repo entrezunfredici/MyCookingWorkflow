@@ -1,0 +1,46 @@
+/* src/components/TodoListItem/TodoListItem.css */
+
+.todo-list-item-card {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none; /* Pour que Link ressemble à un bouton */
+    color: inherit; /* Pour que Link conserve la couleur du texte */
+}
+
+.todo-list-item-card:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.todo-list-item-card h3 {
+    margin: 0 0 8px 0;
+    color: #343a40;
+    font-size: 1.3em;
+}
+
+.todo-list-item-card p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.todo-list-item-card.completed {
+    background-color: #e6ffe6; /* Un vert très pâle */
+    border-color: #d4edda;
+    opacity: 0.8;
+}
+
+.todo-list-item-card.completed h3,
+.todo-list-item-card.completed p {
+    text-decoration: line-through;
+    color: #777;
+}

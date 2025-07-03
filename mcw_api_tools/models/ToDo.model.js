@@ -20,6 +20,11 @@ module.exports = (instance) => {
             type: DataTypes.DATE,
             allowNull: false,
         },
+        completed : {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
         todoListId: {
             type: DataTypes.INTEGER,
             allowNull: false,

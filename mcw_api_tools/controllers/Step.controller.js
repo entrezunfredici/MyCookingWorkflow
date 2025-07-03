@@ -72,3 +72,23 @@ exports.delete = async (req, res) => {
         });
     }
 }
+
+exports.setCompleted = async (req, res) => {
+    try {
+        const stepId = req.params.id;
+        const step = await stepService.findOne(stepId);
+        if (!step) {
+            return res.status(404).send({
+                message: `Etape introuvable pour l'identifiant ${stepId}.`,
+            });
+        }
+
+        // Inverse l'état de la complétion
+        const updatedStep = await stepService.update(stepId, { completed: !step.completed });
+        res.status(200).send(updatedStep);
+    } catch (error) {
+        res.status(500).send({
+            message: error.message || "Une erreur s'est produite lors de la mise à jour de l'état de l'étape.",
+        });
+    }
+}

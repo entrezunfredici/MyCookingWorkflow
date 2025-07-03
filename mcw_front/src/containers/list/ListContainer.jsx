@@ -1,13 +1,16 @@
-import React from 'react';
-import './ListContainer.css'; // On créera ce fichier CSS
+// src/components/ListContainer/ListContainer.jsx
 
-const ListContainer = ({ title, children }) => {
+import React from 'react';
+import './ListContainer.css';
+
+const ListContainer = ({ title, children, listItemClassName = '', listClassName = '' }) => { // Ajout de listClassName
     return (
-        <div className="list-container">
+        <div className={`list-container ${listClassName}`}> {/* Appliquer listClassName ici si besoin */}
             {title && <h2 className="list-title">{title}</h2>}
             <ul className="list-items">
                 {React.Children.map(children, child => (
-                    <li className="list-item">
+                    // On s'assure qu'un key est toujours présent si les enfants n'en ont pas
+                    <li className={`list-item ${listItemClassName}`} key={child?.key || child?.props?.id || Math.random()}>
                         {child}
                     </li>
                 ))}

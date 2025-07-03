@@ -123,7 +123,7 @@ router.post("/add", authMiddleware, step.create);
  *         schema:
  *           type: integer
  *     requestBody:
- *       required: true
+ *       required: true 
  *       content:
  *         application/json:
  *           schema:
@@ -170,6 +170,39 @@ router.put("/:id", authMiddleware, step.update);
  *         description: Erreur interne du serveur.
  */
 router.delete("/:id", authMiddleware, step.delete);
+
+/**
+ * @swagger 
+ * /steps/{id}/completed:
+ *   put:
+ *     summary: Met à complété une étape existant
+ *     tags: [Steps]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID du étape à mettre à jour
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true 
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *              completed:
+ *               type: boolean
+ *               example: true
+ *     responses:
+ *       200:
+ *         description: étape mis à jour avec succès.
+ *       404:
+ *         description: étape non trouvé.
+ *       500:
+ *         description: Erreur interne du serveur.
+ */
+router.put("/:id/completed", authMiddleware, step.setCompleted);
 
 module.exports = (app) => {
   /**

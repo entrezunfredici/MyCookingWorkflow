@@ -20,6 +20,11 @@ module.exports = (instance) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        completed : {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
     }, {
         tableName: 'Steps',
         timestamps: true,

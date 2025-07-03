@@ -72,3 +72,31 @@ exports.delete = async (req, res) => {
         });
     }
 }
+
+exports.setCompleted = async (req, res) => {
+    try {
+        const todoId = req.params.id;
+        const completed = req.body.completed;
+
+        // Vérification que le champ 'completed' est un booléen
+        if (typeof completed !== 'boolean') {
+            return res.status(400).send({
+                message: "Le champ 'completed' doit être un booléen.",
+            });
+        }
+
+        const updatedToDo = await TodoService.update(todoId, { completed });
+
+        if (!updatedToDo) {
+            res.status(404).send({
+                message: `Tâche introuvable pour l'identifiant ${todoId}.`,
+            });
+        } else {
+            res.status(200).send(updatedToDo);
+        }
+    } catch (error) {
+        res.status(500).send({
+            message: error.message || "Une erreur s'est produite lors de la mise à jour de l'état de la tâche.",
+        });
+    }
+}

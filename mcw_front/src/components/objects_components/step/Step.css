@@ -1,1 +1,56 @@
 @import '../../../index.css';
+
+.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 15px; /* Moins de padding que les tâches principales */
+    border-bottom: 1px dashed var(--current-border-color); /* Une bordure différente pour les sous-éléments */
+    color: var(--current-color-text-secondary); /* Couleur de texte secondaire *
+    background-color: var(--current-bg-secondary); /* Un léger fond pour les distinguer */
+    margin-left: 20px; /* Indente les étapes */
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.step-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.step-item-text {
+    flex-grow: 1;
+    font-size: 15px; /* Texte plus petit que la tâche principale */
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.step-item-text.completed {
+    text-decoration: line-through;
+    color: #aab;
+}
+
+.step-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Icônes plus petites */
+    margin-left: 8px;
+    transition: color 0.2s ease;
+}
+
+.step-complete-button {
+    color: #28a745; /* Vert */
+}
+
+.step-complete-button:hover {
+    color: #218838;
+}
+
+.step-delete-button {
+    color: #dc3545; /* Rouge */
+}
+
+.step-delete-button:hover {
+    color: #c82333;
+}

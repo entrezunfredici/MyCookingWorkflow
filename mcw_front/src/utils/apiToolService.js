@@ -40,6 +40,15 @@ export const stepService = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Ajouté selon la documentation API
+    markStepCompleted: async (stepId, completedStatus) => {
+        try {
+            const response = await toolsApiClient.put(`/steps/${stepId}/completed`, { completed: completedStatus });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
     }
 };
 
@@ -83,10 +92,20 @@ export const todoService = {
         } catch (error) {
             throw error.response?.data || error.message;
         }
+    },
+    // Ajouté selon la documentation API
+    markTodoCompleted: async (todoId, completedStatus) => {
+        try {
+            const response = await toolsApiClient.put(`/todos/${todoId}/completed`, { completed: completedStatus });
+            return response.data;
+        } catch (error) {
+            throw error.response?.data || error.message;
+        }
     }
 };
 
-export const TodoList = {
+// Renommé TodoList en todoListService pour une meilleure cohérence
+export const todoListService = {
     getAll: async () => {
         try {
             const response = await toolsApiClient.get('/todolist/all');
