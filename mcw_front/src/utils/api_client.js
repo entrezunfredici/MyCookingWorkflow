@@ -36,6 +36,16 @@ const createApiClient = (baseURL) => {
         return Promise.reject(error);
     });
 
+    client.interceptors.request.use(config => {
+        const token = getCookie('your_auth_token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    }, error => {
+        return Promise.reject(error);
+    });
+
     return client;
 };
 
