@@ -9,6 +9,8 @@ import HomePage from './pages/home_page/HomePage.jsx'; // Chemin correct
 import Profile from './pages/users/profile/Profile.jsx'; // Chemin correct
 import Login from './pages/users/login/Login.jsx'; // Chemin correct
 import Register from './pages/users/register/Register.jsx'; // Chemin correct
+import TodoList from './pages/tools/todolist/TodoList.jsx'; // Chemin correct, si c'est la liste des tâches
+import Todo from './pages/tools/todo/Todo.jsx'; // Chemin correct, si c'est la page de détail d'une tâche
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/todos" element={<TodoList />} />
+            <Route path="/todos/:id" element={<Todo />} /> {/* Route pour les détails d'une tâche spécifique */}
             {/* Route pour les pages non trouvées (404) */}
             <Route path="*" element={<div><h1>404 - Page non trouvée</h1><p>Désolé, cette page n'existe pas.</p></div>} />
           </Routes>

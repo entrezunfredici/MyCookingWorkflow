@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Pour récupérer l'ID de l'URL
-import ListContainer from '../../../containers/ListContainer/ListContainer';
-import Step from '../../../components/Step/Step';
-import { todoService, stepService } from '../../../services/apiToolService'; // Importe les services API
+import ListContainer from '../../../containers/list/ListContainer.jsx';
+import Step from '../../../components/objects_components/step/Step.jsx';
+import { todoService, stepService } from '../../../utils/apiToolService.js'; // Importe les services API
 import './Todo.css';
 
 const Todo = () => {
