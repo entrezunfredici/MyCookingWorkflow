@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isAuthenticated, getCookie, parseJwt } from '../../../utils/cookieManager';
+import { isAuthenticated, getCookie } from '../../../utils/cookieManager';
 import { todoService, todoListService } from '../../../utils/apiToolService.js';
 import './CalendarWeekView.css';
 import { useTheme } from '../../../styles/themeProvider';
@@ -32,20 +32,18 @@ const CalendarWeekView = () => {
             navigate('/login');
             return;
         }
-        const token = getCookie('auth_token');
-        const payload = parseJwt(token);
-        if (!payload || !payload.name || !payload.userId) {
+        const userId = getCookie('userId');
+        if (!userId) {
             setError('Utilisateur non authentifié.');
             setLoading(false);
             return;
         }
-        const todoListName = `${payload.name}_repas`;
         const fetchTodos = async () => {
             try {
                 setLoading(true);
                 // Récupère toutes les listes de l'utilisateur
                 const lists = await todoListService.getAll();
-                const myList = lists.find(l => l.name === todoListName && String(l.userId) === String(payload.userId));
+                const myList = lists.find(l => String(l.userId) === String(userId));
                 if (!myList) {
                     setError("Aucune TodoList trouvée pour cet utilisateur.");
                     setLoading(false);

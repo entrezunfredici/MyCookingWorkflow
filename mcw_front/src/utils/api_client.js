@@ -16,7 +16,7 @@ const createApiClient = (baseURL) => {
         },
     });
 
-  // Intercepteur pour ajouter le token d'authentification à chaque requête
+    // Intercepteur pour ajouter le token d'authentification à chaque requête
     client.interceptors.request.use(config => {
         const token = getCookie('auth_token');
         if (token) {
@@ -31,18 +31,9 @@ const createApiClient = (baseURL) => {
         if (error.response && error.response.status === 401) {
             // Gérer la déconnexion ou la redirection si le token est invalide/expiré
             eraseCookie('auth_token');
+            eraseCookie('userId');
             window.location.href = '/login';
         }
-        return Promise.reject(error);
-    });
-
-    client.interceptors.request.use(config => {
-        const token = getCookie('your_auth_token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    }, error => {
         return Promise.reject(error);
     });
 

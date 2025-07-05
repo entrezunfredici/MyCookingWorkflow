@@ -4,6 +4,14 @@ export const userService = {
     login: async (credentials) => {
         try {
             const response = await usersApiClient.post('/users/login', credentials);
+            // Stocke le token dans un cookie
+            if (response.data.token) {
+                document.cookie = `auth_token=${response.data.token}; path=/;`;
+            }
+            // Stocke l'id utilisateur dans un cookie
+            if (response.data.userId) {
+                document.cookie = `userId=${response.data.userId}; path=/;`;
+            }
             return response.data;
         } catch (error) {
             throw error.response?.data || error.message;
