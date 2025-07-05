@@ -1,15 +1,45 @@
 const userService = require('../services/User.service');
 const roleService = require('../services/Role.service');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 exports.register = async (req, res) => {
   try {
     const { name, password, email } = req.body;
-    await userService.create({ name, email, password });
+    const user = await userService.create({ name, email, password });
+
+    // Création automatique de la TodoList pour l'utilisateur
+    try {
+      // Générer un JWT pour le nouvel utilisateur
+      const todoListToken = jwt.sign(
+        { id: user.userId, name: user.name, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+      await axios.post(
+        process.env.TOOLS_API_URL + '/todolist/add',
+        { name: `${name}_repas`, userId: user.userId },
+        {
+          headers: {
+            Authorization: `Bearer ${todoListToken}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error('Erreur lors de la création de la TodoList:', err?.message || err);
+      // Optionnel : tu peux choisir de ne pas bloquer l'inscription si la TodoList échoue
+    }
+
     res.status(201).send({ message: "Utilisateur inscrit avec succès." });
   } catch (error) {
     console.error(error?.message || error);
-    res.status(500).send({ message: "inscription failed "+error?.message || error });
+    if (error?.message && error.message.includes('Email déjà utilisé')) {
+      return res.status(409).send({ message: error.message });
+    }
+    if (error?.message && error.message.includes('Champs manquants')) {
+      return res.status(400).send({ message: error.message });
+    }
+    res.status(500).send({ message: "inscription failed "+(error?.message || error) });
   }
 };
 

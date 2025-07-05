@@ -1,6 +1,6 @@
 import './Login.css';
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import Form from '../../../components/main_components/form/Form.jsx';
 import { setCookie } from '../../../utils/cookieManager';
 import { userService } from '../../../utils/apiUserService.js';
@@ -8,8 +8,10 @@ import { userService } from '../../../utils/apiUserService.js';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const successMsg = location.state?.success;
 
     const loginFields = [
         { name: 'email', label: 'Email', type: 'email', required: true },
@@ -37,6 +39,7 @@ const Login = () => {
 
     return (
         <div>
+            {successMsg && <p style={{ color: 'green', textAlign: 'center' }}>{successMsg}</p>}
             <Form
                 title="Connexion"
                 fields={loginFields}

@@ -31,4 +31,18 @@
 
   --color-shadow-light: rgba(0, 0, 0, 0.1); /* Ombre légère (clair) */
   --color-shadow-dark: rgba(0, 0, 0, 0.2); /* Ombre légère (sombre) */
+
+  /* --- Couleurs spécifiques calendrier --- */
+  --calendar-bg-light: #f8fafc;
+  --calendar-bg-dark: #232b3a;
+  --calendar-card-light: #ffffff;
+  --calendar-card-dark: #2d3748;
+  --calendar-border-light: #d1d9df;
+  --calendar-border-dark: #3a4256;
+  --calendar-task-light: #6D9773;
+  --calendar-task-dark: #8fd6a5;
+  --calendar-task-hover-light: #E6B86C;
+  --calendar-task-hover-dark: #e6b86c;
+  --calendar-text-light: #333C42;
+  --calendar-text-dark: #E2E8F0;
 }

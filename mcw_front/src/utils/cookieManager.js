@@ -44,3 +44,12 @@ export const eraseCookie = (name) => {
 export const isAuthenticated = () => {
   return getCookie('auth_token') !== null;
 };
+
+// Décoder un JWT pour extraire le payload (ex: userId)
+export function parseJwt(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+}

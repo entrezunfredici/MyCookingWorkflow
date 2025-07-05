@@ -40,4 +40,23 @@
     text-align: center;
 }
 
+body.light-mode {
+  background: var(--color-bg-primary-light);
+  color: var(--color-text-primary-light);
+}
+body.dark-mode {
+  background: var(--color-bg-primary-dark);
+  color: var(--color-text-primary-dark);
+}
+
+/* Pour le calendrier */
+.calendar-week-view-container.light-mode {
+  background: var(--calendar-bg-light);
+  color: var(--calendar-text-light);
+}
+.calendar-week-view-container.dark-mode {
+  background: var(--calendar-bg-dark);
+  color: var(--calendar-text-dark);
+}
+
 

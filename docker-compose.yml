@@ -130,6 +130,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - AUTH_JWT_EXPIRES_IN=${AUTH_JWT_EXPIRES_IN}
       - VITE_FRONT_URL=http://localhost:${FRONTEND_PORT}
+      - TOOLS_API_URL=http://api_tools:${API_TOOLS_PORT}
     depends_on:
       postgres_users:
         condition: service_healthy
@@ -206,6 +207,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
+    ports:
+      - "${API_TOOLS_PORT}:${API_TOOLS_PORT}"
 
 volumes:
   postgres-users-data:

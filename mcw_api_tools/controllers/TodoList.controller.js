@@ -2,7 +2,8 @@ const TodoListService = require('../services/ToDoList.service.js');
 
 exports.findAll = async (req, res) => {
     try {
-        const data = await TodoListService.findAll();
+        const userId = req.user.userId;
+        const data = await TodoListService.findAll(userId);
         res.status(200).send(data);
     } catch (error) {
         res.status(500).send({
@@ -13,7 +14,8 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
     try {
-        const data = await TodoListService.findOne(req.params.id);
+        const userId = req.user.userId;
+        const data = await TodoListService.findOne(req.params.id, userId);
         if (!data) {
             res.status(404).send({
                 message: `Liste de tâches introuvable pour l'identifiant ${req.params.id}.`,
@@ -30,7 +32,8 @@ exports.findOne = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const data = await TodoListService.create(req.body);
+        const userId = req.user.userId;
+        const data = await TodoListService.create({ ...req.body, userId });
         res.status(201).send(data);
     } catch (error) {
         res.status(500).send({
@@ -41,7 +44,8 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const updatedList = await TodoListService.update(req.params.id, req.body);
+        const userId = req.user.userId;
+        const updatedList = await TodoListService.update(req.params.id, req.body, userId);
         if (!updatedList) {
             res.status(404).send({
                 message: `Liste de tâches introuvable pour l'identifiant ${req.params.id}.`,
@@ -58,7 +62,8 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const deletedList = await TodoListService.delete(req.params.id);
+        const userId = req.user.userId;
+        const deletedList = await TodoListService.delete(req.params.id, userId);
         if (!deletedList) {
             res.status(404).send({
                 message: `Liste de tâches introuvable pour l'identifiant ${req.params.id}.`,

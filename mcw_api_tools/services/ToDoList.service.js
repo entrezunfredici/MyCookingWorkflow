@@ -1,28 +1,28 @@
 const { TodoLists } = require("../models/index");
 
 class TodoListService {
-    async findAll() {
-        return TodoLists.findAll();
+    async findAll(userId) {
+        return TodoLists.findAll({ where: { userId } });
     }
 
-    async findOne(id) {
-        return await TodoLists.findByPk(id);
+    async findOne(id, userId) {
+        return await TodoLists.findOne({ where: { todoListId: id, userId } });
     }
 
     async create(data) {
         return await TodoLists.create(data);
     }
 
-    async update(id, data) {
+    async update(id, data, userId) {
         await TodoLists.update(data, {
-            where: { id }
+            where: { todoListId: id, userId }
         });
-        return this.findOne(id);
+        return this.findOne(id, userId);
     }
 
-    async delete(id) {
+    async delete(id, userId) {
         return await TodoLists.destroy({
-            where: { id }
+            where: { todoListId: id, userId }
         });
     }
 }

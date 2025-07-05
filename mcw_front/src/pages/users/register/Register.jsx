@@ -28,15 +28,18 @@ const Register = () => { // Renommé de RegisterPage à Register
         }
 
         try {
-            const { confirmPassword, ...dataToSend } = formData;
-
+            const dataToSend = {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password
+            };
             const response = await userService.register(dataToSend);
 
             console.log(response);
-            navigate('/login');
+            navigate('/login', { state: { success: "Inscription réussie, veuillez vous connecter." } });
         } catch (err) {
             console.error('Erreur d\'inscription :', err);
-            setError(err || 'Échec de l\'inscription. Veuillez réessayer.');
+            setError(err?.message || err || 'Échec de l\'inscription. Veuillez réessayer.');
         } finally {
             setLoading(false);
         }

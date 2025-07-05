@@ -12,6 +12,10 @@ module.exports = (instance) => {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     }, {
         tableName: 'TodoLists',
         timestamps: true,
