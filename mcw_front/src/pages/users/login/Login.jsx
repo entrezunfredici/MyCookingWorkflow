@@ -2,7 +2,7 @@ import './Login.css';
 import { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import Form from '../../../components/main_components/form/Form.jsx';
-import { setCookie } from '../../../utils/cookieManager';
+import { setCookie, parseJwt } from '../../../utils/cookieManager';
 import { userService } from '../../../utils/apiUserService.js';
 
 
@@ -25,7 +25,27 @@ const Login = () => {
         try {
             const response = await userService.login(formData);
             const { token, user } = response; 
+            
+            // Stocker le token d'authentification
             setCookie('auth_token', token, 7);
+            // Stocker l'ID utilisateur
+            let userId;
+            if (response.userId) {
+                // Si l'API retourne directement l'userId
+                userId = response.userId;
+            } else if (user && user.id) {
+                // Si l'API retourne l'objet user avec l'id
+                userId = user.id;
+            } else {
+                // Décoder le token JWT pour extraire l'userId
+                const decodedToken = parseJwt(token);
+                userId = decodedToken?.userId || decodedToken?.id;
+            }
+            
+            if (userId) {
+                console.log(userId)
+                setCookie('user_id', userId.toString(), 7);
+            }
 
             console.log('Connexion réussie ! Utilisateur :', user);
             navigate('/profile');

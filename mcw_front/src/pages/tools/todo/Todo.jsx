@@ -23,19 +23,13 @@ const Todo = () => {
         const fetchTodoAndSteps = async () => {
             try {
                 setLoading(true);
-                // 1. Charger les détails du ToDo
                 const fetchedTodo = await todoService.getTodoById(id);
                 setTodo(fetchedTodo);
-                // Simule la complétion si ton API ne la fournit pas directement avec le GET /todos/{id}
-                // Tu devras ajuster ceci si ton API renvoie 'completed' ou non.
-                setIsTodoCompleted(false); // Ou fetchedTodo.completed si ton API le fournit
+                setIsTodoCompleted(false); 
 
-                // 2. Charger toutes les étapes et filtrer celles qui appartiennent à ce ToDo
-                // Ceci est une solution temporaire. Idéalement, ton API aurait un endpoint
-                // comme GET /todos/{id}/steps.
                 const allSteps = await stepService.getAllSteps();
                 const relevantSteps = allSteps.filter(step => step.todoListId === fetchedTodo.id); // Assuming todoListId on steps
-                setSteps(relevantSteps.map(step => ({ ...step, completed: false }))); // Ajouter un champ 'completed'
+                setSteps(relevantSteps.map(step => ({ ...step, completed: false })));
 
                 setError(null);
             } catch (err) {

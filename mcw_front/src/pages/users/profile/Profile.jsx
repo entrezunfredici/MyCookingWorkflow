@@ -20,7 +20,7 @@ const Profile = () => {
             setLoading(true);
             setError(null);
             try {
-                const userId = getCookie('userId');
+                const userId = getCookie('user_id');
                 if (!userId) throw new Error('Aucun utilisateur connecté');
                 const userData = await userService.getUserById(userId);
                 setForm({ name: userData.name, email: userData.email });
@@ -42,7 +42,7 @@ const Profile = () => {
         setError(null);
         setSuccess(null);
         try {
-            const userId = getCookie('userId');
+            const userId = getCookie('user_id');
             await userService.updateUser(userId, form);
             setSuccess('Profil mis à jour avec succès.');
         } catch {
@@ -53,7 +53,7 @@ const Profile = () => {
     const handleLogout = () => {
         // Logic to handle logout
         document.cookie = 'auth_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'userId=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'user_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         navigate('/login');
     };
 

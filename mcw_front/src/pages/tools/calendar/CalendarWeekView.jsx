@@ -32,12 +32,12 @@ const CalendarWeekView = () => {
             navigate('/login');
             return;
         }
-        const userId = getCookie('userId');
-        if (!userId) {
-            setError('Utilisateur non authentifié.');
-            setLoading(false);
-            return;
-        }
+        const userId = getCookie('user_id');
+        // if (!userId) {
+        //     setError('Utilisateur non authentifié.');
+        //     setLoading(false);
+        //     return;
+        // }
         const fetchTodos = async () => {
             try {
                 setLoading(true);

@@ -18,7 +18,8 @@ const TodoList = () => {
             navigate('/login');
             return;
         }
-        const userId = getCookie('userId');
+        const userId = getCookie('user_id');
+        console.log(userId)
         if (!userId) {
             setError('Utilisateur non authentifié.');
             setLoading(false);
